@@ -86,14 +86,16 @@ func main() {
 
 	handler := c.Handler(r)
 
-	fmt.Println("🚀 Server starting on http://localhost:8080")
-	fmt.Println("📊 Dashboard available at http://localhost:8080")
-	// log.Fatal(http.ListenAndServe(":8080", handler))
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+	port = "8080"
 	}
+
+	fmt.Printf("🚀 Server starting on http://0.0.0.0:%s\n", port)
+	fmt.Printf("🌍 If hosted, access at https://your-railway-subdomain.up.railway.app\n")
+
 	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, handler))
+
 }
 
 func loadData() {
