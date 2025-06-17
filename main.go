@@ -88,7 +88,12 @@ func main() {
 
 	fmt.Println("🚀 Server starting on http://localhost:8080")
 	fmt.Println("📊 Dashboard available at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	// log.Fatal(http.ListenAndServe(":8080", handler))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, handler))
 }
 
 func loadData() {
