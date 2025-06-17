@@ -1,0 +1,29 @@
+{
+    "linuxCategories": [
+        {
+            "category": "VPN",
+            "applications": [
+                {
+                    "app_name": [
+                        "wireguard"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "nordvpn, wireguard"
+                    ],
+                    "publisher": [
+                        "nord, bhai "
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Security",
+            "applications": []
+        }
+    ]
+}

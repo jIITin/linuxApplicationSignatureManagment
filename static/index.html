@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Application Signature Management</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .category-filter {
+            margin-bottom: 20px;
+        }
+
+        .category-filter select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .applications-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .app-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .app-category {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        .app-publisher {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .app-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+        }
+
+        .file-upload {
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            cursor: pointer;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        .success-message, .error-message {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐧 Linux Application Signature Manager</h1>
+            <p>Manage and organize your Linux application signatures with ease</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalApplications">0</div>
+                <div class="stat-label">Applications</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="recentlyAdded">0</div>
+                <div class="stat-label">Recently Added</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-panel">
+                <div class="section-title">
+                    📱 Applications
+                </div>
+                
+                <div class="category-filter">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+
+                <div id="applicationsContainer" class="applications-grid">
+                    <!-- Applications will be loaded here -->
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="section-title">
+                    ⚡ Quick Actions
+                </div>
+                
+                <button class="btn" onclick="openModal('addAppModal')">➕ Add Application</button>
+                <button class="btn" onclick="openModal('addCategoryModal')">📁 Add Category</button>
+                <button class="btn" onclick="openModal('uploadModal')">📤 Upload Data</button>
+                <button class="btn" onclick="downloadData()">📥 Download All</button>
+
+                <div class="chart-container">
+                    <canvas id="categoryChart" width="300" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Application Modal -->
+    <div id="addAppModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addAppModal')">&times;</span>
+            <h2>Add New Application</h2>
+            <div class="success-message" id="addAppSuccess"></div>
+            <div class="error-message" id="addAppError"></div>
+            <form id="addAppForm">
+                <div class="form-group">
+                    <label for="appCategory">Category:</label>
+                    <select id="appCategory" required>
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appName">Application Name:</label>
+                    <input type="text" id="appName" required>
+                </div>
+                <div class="form-group">
+                    <label for="appPublisher">Publisher:</label>
+                    <input type="text" id="appPublisher" required>
+                </div>
+                <button type="submit" class="btn">Add Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
+            <h2>Add New Category</h2>
+            <div class="success-message" id="addCategorySuccess"></div>
+            <div class="error-message" id="addCategoryError"></div>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label for="categoryName">Category Name:</label>
+                    <input type="text" id="categoryName" required>
+                </div>
+                <button type="submit" class="btn">Add Category</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('uploadModal')">&times;</span>
+            <h2>Upload Data</h2>
+            <div class="success-message" id="uploadSuccess"></div>
+            <div class="error-message" id="uploadError"></div>
+            <div class="file-upload">
+                <input type="file" id="fileInput" accept=".json">
+                <label for="fileInput">📁 Click to select JSON file</label>
+                <p>Upload a JSON file with application signatures</p>
+            </div>
+            <button class="btn" onclick="uploadFile()">Upload File</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let currentData = {};
+        let categoryChart = null;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadCategories();
+            loadApplications();
+        });
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE}/stats`);
+                const stats = await response.json();
+                
+                document.getElementById('totalCategories').textContent = stats.totalCategories;
+                document.getElementById('totalApplications').textContent = stats.totalApplications;
+                document.getElementById('recentlyAdded').textContent = stats.recentlyAdded;
+                
+                updateChart(stats.categoryCounts);
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load categories
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories`);
+                const categories = await response.json();
+                
+                const categoryFilter = document.getElementById('categoryFilter');
+                const appCategory = document.getElementById('appCategory');
+                
+                // Clear existing options
+                categoryFilter.innerHTML = '<option value="">All Categories</option>';
+                appCategory.innerHTML = '<option value="">Select Category</option>';
+                
+                categories.forEach(category => {
+                    const option1 = new Option(category, category);
+                    const option2 = new Option(category, category);
+                    categoryFilter.add(option1);
+                    appCategory.add(option2);
+                });
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        // Load applications
+        async function loadApplications(category = '') {
+            try {
+                const url = category ? `${API_BASE}/applications?category=${encodeURIComponent(category)}` : `${API_BASE}/applications`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                currentData = data;
+                displayApplications(data, category);
+            } catch (error) {
+                console.error('Error loading applications:', error);
+            }
+        }
+
+        // Display applications
+        function displayApplications(data, selectedCategory = '') {
+            const container = document.getElementById('applicationsContainer');
+            container.innerHTML = '';
+            
+            const categories = selectedCategory && data.category ? [data] : data.linuxCategories || [];
+            
+            categories.forEach(category => {
+                category.applications.forEach(app => {
+                    const appCard = document.createElement('div');
+                    appCard.className = 'app-card';
+                    
+                    appCard.innerHTML = `
+                        <div class="app-header">
+                            <div class="app-name">${app.app_name.join(', ')}</div>
+                            <div class="app-category">${category.category}</div>
+                        </div>
+                        <div class="app-publisher">Publisher: ${app.publisher.join(', ')}</div>
+                        <div class="app-actions">
+                            <button class="btn btn-small btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}')">
+                                🗑️ Delete
+                            </button>
+                            <button class="btn btn-small" onclick="downloadByCategory('${category.category}')">
+                                📥 Download Category
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(appCard);
+                });
+            });
+        }
+
+        // Update chart
+        function updateChart(categoryCounts) {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            
+            if (categoryChart) {
+                categoryChart.destroy();
+            }
+            
+            const labels = Object.keys(categoryCounts);
+            const data = Object.values(categoryCounts);
+            
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#667eea',
+                            '#764ba2',
+                            '#f093fb',
+                            '#f5576c',
+                            '#4facfe',
+                            '#00f2fe',
+                            '#43e97b',
+                            '#38f9d7'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listeners
+        document.getElementById('categoryFilter').addEventListener('change', function() {
+            loadApplications(this.value);
+        });
+
+        document.getElementById('addAppForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const appData = {
+                category: document.getElementById('appCategory').value,
+                app_name: [document.getElementById('appName').value],
+                publisher: [document.getElementById('appPublisher').value]
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/applications`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(appData)
+                });
+                
+                if (response.ok) {
+                    showMessage('addAppSuccess', 'Application added successfully!');
+                    document.getElementById('addAppForm').reset();
+                    loadStats();
+                    loadApplications();
+                    setTimeout(() => closeModal('addAppModal'), 2000);
+                } else {
+                    const error = await response.text();
+                    showMessage('addAppError', error);
+                }
+            } catch (error) {
+                showMessage('addAppError', 'Error adding application: ' + error.message);
+            }
+        });
+
+        document.getElementById('addCategoryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const categoryData = {
+                category: document.getElementById('categoryName').value
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/categories`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(categoryData)
+                });
+                
+                if (response.ok) {
+                    showMessage('addCategorySuccess', 'Category added successfully!');
+                    document.getElementById('addCategoryForm').reset();
+                    loadStats();
+                    loadCategories();
+                    setTimeout(() => closeModal('addCategoryModal'), 2000);
+                } else {
+                    const error = await response.text();
+                    showMessage('addCategoryError', error);
+                }
+            } catch (error) {
+                showMessage('addCategoryError', 'Error adding category: ' + error.message);
+            }
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Clear messages
+            const modal = document.getElementById(modalId);
+            const messages = modal.querySelectorAll('.success-message, .error-message');
+            messages.forEach(msg => {
+                msg.style.display = 'none';
+                msg.textContent = '';
+            });
+        }
+
+        function showMessage(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+
+        // Download functions
+        async function downloadData() {
+            try {
+                const response = await fetch(`${API_BASE}/download`);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'linux_signatures.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error downloading data:', error);
+            }
+        }
+
+        async function downloadByCategory(category) {
+            try {
+                const response = await fetch(`${API_BASE}/download/${encodeURIComponent(category)}`);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${category.toLowerCase().replace(/\s+/g, '_')}_signatures.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error downloading category data:', error);
+            }
+        }
+
+        // Upload function
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showMessage('uploadError', 'Please select a file');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('jsonFile', file);
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    showMessage('uploadSuccess', `Upload successful! Added ${result.addedCategories} categories and ${result.addedApplications} applications.`);
+                    loadStats();
+                    loadCategories();
+                    loadApplications();
+                    setTimeout(() => closeModal('uploadModal'), 3000);
+                } else {
+                    const error = await response.text();
+                    showMessage('uploadError', error);
+                }
+            } catch (error) {
+                showMessage('uploadError', 'Error uploading file: ' + error.message);
+            }
+        }
+
+        // Delete functions
+        async function deleteApplication(category, appName) {
+            if (!confirm(`Are you sure you want to delete "${appName}" from the "${category}" category?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/delete/application?category=${encodeURIComponent(category)}&app_name=${encodeURIComponent(appName)}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadStats();
+                    loadApplications(document.getElementById('categoryFilter').value);
+                } else {
+                    const error = await response.text();
+                    alert('Error deleting application: ' + error);
+                }
+            } catch (error) {
+                alert('Error deleting application: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
