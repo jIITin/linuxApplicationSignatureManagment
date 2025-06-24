@@ -1,11 +1,413 @@
 {
-    "linuxCategories": [
+    "linux_signature": [
         {
             "category": "VPN",
             "applications": [
                 {
                     "app_name": [
-                        "wireguard"
+                        "nordvpn",
+                        "nordvpnd"
+                    ],
+                    "publisher": [
+                        "https://nordvpn.com/",
+                        "NordVPN"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mullvad-vpn",
+                        "mullvad-gui"
+                    ],
+                    "publisher": [
+                        "Mullvad VPN"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "eddie-ui",
+                        "eddie-tray"
+                    ],
+                    "publisher": [
+                        "Eddie"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hotspotshield"
+                    ],
+                    "publisher": [
+                        "Pango (c) 2020"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "logmein-hamachi",
+                        "hamachid"
+                    ],
+                    "publisher": [
+                        "LogMeIn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "windscribe"
+                    ],
+                    "publisher": [
+                        "Windscribe Limited"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "expressvpn",
+                        "expressvpnd"
+                    ],
+                    "publisher": [
+                        "ExpressVPN Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wireguard-gui"
+                    ],
+                    "publisher": [
+                        "Leo Vernisse"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "surfshark"
+                    ],
+                    "publisher": [
+                        "Surfshark VPN"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Email",
+            "applications": [
+                {
+                    "app_name": [
+                        "thunderbird"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "proton-mail"
+                    ],
+                    "publisher": [
+                        "Pedro Avalos"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "electron-mail"
+                    ],
+                    "publisher": [
+                        "Vladimir Yakovlev"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "monograph"
+                    ],
+                    "publisher": [
+                        "Sergey Tsymbal"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mailspring"
+                    ],
+                    "publisher": [
+                        "Mailspring"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bluemail"
+                    ],
+                    "publisher": [
+                        "Blix Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hey-mail"
+                    ],
+                    "publisher": [
+                        "Basecamp, LLC"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hiri"
+                    ],
+                    "publisher": [
+                        "Hiri"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "geary"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "evolution",
+                        "evolution-data-server",
+                        "evolution-alarm-notify"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "claws-mail"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "balsa"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kmail",
+                        "akonadi_mailmerge_agent",
+                        "akonadi_maildispatcher_agent",
+                        "akonadi_unifiedmailbox_agent",
+                        "akonadi_mailfilter_agent",
+                        "akonadi_sendlater_agent",
+                        "akonadi_followupreminder_agent"
+                    ],
+                    "publisher": [
+                        "Kubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sylpheed"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mutt"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "outlook-for-linux"
+                    ],
+                    "publisher": [
+                        "Mahmoud Bahaa"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Web Browsers",
+            "applications": [
+                {
+                    "app_name": [
+                        "searx"
+                    ],
+                    "publisher": [
+                        "Vishal"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "firefox"
+                    ],
+                    "publisher": [
+                        "Mozilla"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "brave-browser-beta",
+                        "brave-browser",
+                        "brave"
+                    ],
+                    "publisher": [
+                        "Brave Software"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "microsoft-edge-stable",
+                        "msedge",
+                        "microsoft-edge-beta"
+                    ],
+                    "publisher": [
+                        "Microsoft Edge for Linux Team"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "baidunetdisk"
+                    ],
+                    "publisher": [
+                        "root"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vivaldi"
+                    ],
+                    "publisher": [
+                        "Vivaldi Technologies"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "luakit"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dillo"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "midori"
+                    ],
+                    "publisher": [
+                        "Christian Dywan"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "konqueror"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "falkon"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "epiphany"
+                    ],
+                    "publisher": [
+                        "Jeremy Bícha"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "chromium"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "google-chrome-stable",
+                        "chrome",
+                        "chrome_crashpad_handler"
+                    ],
+                    "publisher": [
+                        "Chrome Linux Team"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "opera-stable",
+                        "opera",
+                        "opera_crashreporter",
+                        "opera_autoupdate"
+                    ],
+                    "publisher": [
+                        "Opera Packaging Team"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Instant Messaging",
+            "applications": [
+                {
+                    "app_name": [
+                        "telegram-desktop",
+                        "telegram-cli"
+                    ],
+                    "publisher": [
+                        "Telegram FZ-LLC",
+                        "Marius Quabeck"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "slack",
+                        "slack-term"
+                    ],
+                    "publisher": [
+                        "Slack",
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rocketchat-desktop"
+                    ],
+                    "publisher": [
+                        "Rocket.Chat"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "konversation"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "flock-chat"
+                    ],
+                    "publisher": [
+                        "RIVA FZC"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mattermost-desktop"
                     ],
                     "publisher": [
                         "Snapcrafters"
@@ -13,17 +415,3935 @@
                 },
                 {
                     "app_name": [
-                        "nordvpn, wireguard"
+                        "zulip"
                     ],
                     "publisher": [
-                        "nord, bhai "
+                        "Zulip"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "discord"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "signal-desktop"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "whalebird"
+                    ],
+                    "publisher": [
+                        "AkiraFukushima"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "caprine"
+                    ],
+                    "publisher": [
+                        "Sindre Sorhus"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "messenger-collabee"
+                    ],
+                    "publisher": [
+                        "COLLABEE INC."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tokodon"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "userwill"
+                    ],
+                    "publisher": [
+                        "Userwill GmbH"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "zenchat"
+                    ],
+                    "publisher": [
+                        "Zenkit"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "irccloud"
+                    ],
+                    "publisher": [
+                        "IRCCloud"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "neochat"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "collabee"
+                    ],
+                    "publisher": [
+                        "COLLABEE INC."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rocketchat-server"
+                    ],
+                    "publisher": [
+                        "Rocket.Chat"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "twist"
+                    ],
+                    "publisher": [
+                        "Doist"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "iamb"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wire"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "transporter"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "webcord"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "clairvoyant"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "keybase"
+                    ],
+                    "publisher": [
+                        "Alex Murray"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "irssi"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "whatsie"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "halloy"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "session-desktop"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "element-desktop"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fractal"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "toot"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "thelounge"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "matterbridge"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tamtam-app"
+                    ],
+                    "publisher": [
+                        "Odnoklassniki Ltd"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fluffychat"
+                    ],
+                    "publisher": [
+                        "Krille-chan"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wrapup"
+                    ],
+                    "publisher": [
+                        "Mert Demir"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "revolt-desktop"
+                    ],
+                    "publisher": [
+                        "Amy Perez"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "discord-canary"
+                    ],
+                    "publisher": [
+                        "Dev Singh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "trifa-desktop"
+                    ],
+                    "publisher": [
+                        "zoff99"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mikutter"
+                    ],
+                    "publisher": [
+                        "yuntan"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "whatee"
+                    ],
+                    "publisher": [
+                        "Heli Herrera"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hyperspace"
+                    ],
+                    "publisher": [
+                        "Marquis Kurt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "whatsapp-app",
+                        "whatsappwebwrapper",
+                        "whatsapp-linux-desktop",
+                        "whatsapp-desktop-client",
+                        "kesty-whatsapp"
+                    ],
+                    "publisher": [
+                        "Fatih YOLCU",
+                        "user0",
+                        "Sayedul Sayem",
+                        "Tanmoy Ganguly",
+                        "Olubunmi Tosin"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bluebubbles"
+                    ],
+                    "publisher": [
+                        "BlueBubbles"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "zoom-client"
+                    ],
+                    "publisher": [
+                        "Oliver Grawert"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "smart-smm-assistant"
+                    ],
+                    "publisher": [
+                        "Sergey Tsymbal"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ehlo"
+                    ],
+                    "publisher": [
+                        "OpenTeam Labs"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "zeronet"
+                    ],
+                    "publisher": [
+                        "Maciej Krüger"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "nicotine-plus"
+                    ],
+                    "publisher": [
+                        "Nicotine+ Team"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "axolotl"
+                    ],
+                    "publisher": [
+                        "Aaron Kimmig"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "jdim"
+                    ],
+                    "publisher": [
+                        "JDimproved project"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "electronic-wechat"
+                    ],
+                    "publisher": [
+                        "ubuntu-dawndiy"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cyph"
+                    ],
+                    "publisher": [
+                        "Cyph"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "legcord"
+                    ],
+                    "publisher": [
+                        "Aiden"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "teams-for-linux"
+                    ],
+                    "publisher": [
+                        "Ismael Martinez Ramos"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "messenger-gtk"
+                    ],
+                    "publisher": [
+                        "Tobias Frisch"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "shenko"
+                    ],
+                    "publisher": [
+                        "Danny Dowshenko"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "firestr"
+                    ],
+                    "publisher": [
+                        "Maxim khailo"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "matterircd"
+                    ],
+                    "publisher": [
+                        "James Hebden"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "whatsdesk"
+                    ],
+                    "publisher": [
+                        "Gustavo Gonzalez"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "deltachat-desktop"
+                    ],
+                    "publisher": [
+                        "Nils Büchner"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sendall"
+                    ],
+                    "publisher": [
+                        "Custom Automated Systems ® Pte Ltd"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "deltatouch"
+                    ],
+                    "publisher": [
+                        "Lothar Ketterer"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "camus"
+                    ],
+                    "publisher": [
+                        "Morgan Robertson"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "outlook-ew"
+                    ],
+                    "publisher": [
+                        "Francisco Martins"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "discorkie"
+                    ],
+                    "publisher": [
+                        "AppOutlet"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mixin-desktop"
+                    ],
+                    "publisher": [
+                        "Mixin"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gistdeck"
+                    ],
+                    "publisher": [
+                        "GistHouse Linux"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "facebook-auto-utility-tool"
+                    ],
+                    "publisher": [
+                        "Md Delower Hossain"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "walc"
+                    ],
+                    "publisher": [
+                        "Muhammad Tayyab Sheikh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fagram"
+                    ],
+                    "publisher": [
+                        "FAteam"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dispute"
+                    ],
+                    "publisher": [
+                        "Jules Azad Emery"
                     ]
                 }
             ]
         },
         {
-            "category": "Security",
-            "applications": []
+            "category": "Health",
+            "applications": [
+                {
+                    "app_name": [
+                        "stretchly"
+                    ],
+                    "publisher": [
+                        "Jan Hovancik"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bmi-calculator"
+                    ],
+                    "publisher": [
+                        "Vijay Satheesh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "librelinkupdesktop"
+                    ],
+                    "publisher": [
+                        "Crazy Marvin"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ketoshare"
+                    ],
+                    "publisher": [
+                        "Custom Automated Systems ® Pte Ltd"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dosage-tracker"
+                    ],
+                    "publisher": [
+                        "Diego Povliuk"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "coronabar"
+                    ],
+                    "publisher": [
+                        "Luís Louro"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "addiction-tracker"
+                    ],
+                    "publisher": [
+                        "Charlesschaefer"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "chronoburn"
+                    ],
+                    "publisher": [
+                        "Andre Cancian"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "weasis"
+                    ],
+                    "publisher": [
+                        "Nicolas Roduit"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "silaty"
+                    ],
+                    "publisher": [
+                        "Salem Yaslem"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tk-safe"
+                    ],
+                    "publisher": [
+                        "Techniker Krankenkasse"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "inner-breeze"
+                    ],
+                    "publisher": [
+                        "NaoX"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hranoprovod-cli"
+                    ],
+                    "publisher": [
+                        "Evgeni Vasilev"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pomatez"
+                    ],
+                    "publisher": [
+                        "Roldan Montilla Jr"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "stayfit"
+                    ],
+                    "publisher": [
+                        "Rosemary Fernandes"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hek-epa-desktopclient"
+                    ],
+                    "publisher": [
+                        "HEK"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vaidikcare"
+                    ],
+                    "publisher": [
+                        "Vaidik Care"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dijo"
+                    ],
+                    "publisher": [
+                        "Purvesh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bazi-calculator"
+                    ],
+                    "publisher": [
+                        "Willian Alberto Lauber"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dream-journal-bio"
+                    ],
+                    "publisher": [
+                        "Sharukh GV"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "musclecalc"
+                    ],
+                    "publisher": [
+                        "Piotr Bajdek"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "saudefx"
+                    ],
+                    "publisher": [
+                        "Pedro Marinho"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "catalyst-live"
+                    ],
+                    "publisher": [
+                        "Ascend Cardiovascular LLC"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "News/Media",
+            "applications": [
+                {
+                    "app_name": [
+                        "newsboat"
+                    ],
+                    "publisher": [
+                        "Alexander Batischev"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gfeeds"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "newsflash"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "worldnewspapers"
+                    ],
+                    "publisher": [
+                        "PressPage Entertainment Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fluent-reader"
+                    ],
+                    "publisher": [
+                        "No Name Pro"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "informado"
+                    ],
+                    "publisher": [
+                        "030"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "raven-reader"
+                    ],
+                    "publisher": [
+                        "Meet Godhani"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "teletext"
+                    ],
+                    "publisher": [
+                        "Topias Mariapori"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pulse"
+                    ],
+                    "publisher": [
+                        "Frederik Feichtmeier"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "obsr"
+                    ],
+                    "publisher": [
+                        "OBSR Developer"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "breader"
+                    ],
+                    "publisher": [
+                        "breeze2"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "twri"
+                    ],
+                    "publisher": [
+                        "Meng-Yuan Huang"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "linkding"
+                    ],
+                    "publisher": [
+                        "Matias Piipari"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "liferea"
+                    ],
+                    "publisher": [
+                        "Alejandro Vera"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mynews"
+                    ],
+                    "publisher": [
+                        "Law Zava"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "alarabiya-desktop"
+                    ],
+                    "publisher": [
+                        "Salem Yaslem"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rssepisodeextractor"
+                    ],
+                    "publisher": [
+                        "André Hahn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rssnotify"
+                    ],
+                    "publisher": [
+                        "Joshua Brent Marsh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "phoronix-news"
+                    ],
+                    "publisher": [
+                        "scott snyder"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Financial Services",
+            "applications": [
+                {
+                    "app_name": [
+                        "kcalc"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-calculator"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qalculate"
+                    ],
+                    "publisher": [
+                        "Hanna Knutsson"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bitpay"
+                    ],
+                    "publisher": [
+                        "BitPay, Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "polkadot"
+                    ],
+                    "publisher": [
+                        "Dwellir AB"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dogecoin-unofficial"
+                    ],
+                    "publisher": [
+                        "Anthony Chen"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "nervatura"
+                    ],
+                    "publisher": [
+                        "Kappel Csaba"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fishing-funds"
+                    ],
+                    "publisher": [
+                        "1zilc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wagerr-electron-app"
+                    ],
+                    "publisher": [
+                        "CkTI"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "namecoin-core"
+                    ],
+                    "publisher": [
+                        "Jules Azad Emery"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "express-pos"
+                    ],
+                    "publisher": [
+                        "Ian"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "slate"
+                    ],
+                    "publisher": [
+                        "Slate"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "geewallet"
+                    ],
+                    "publisher": [
+                        "Andres G. Aragoneses"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bitshares2-light"
+                    ],
+                    "publisher": [
+                        "svk31"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "chartgeany"
+                    ],
+                    "publisher": [
+                        "Lucas Tsatiris"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "coin"
+                    ],
+                    "publisher": [
+                        "Coin Space"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "invoiceninja"
+                    ],
+                    "publisher": [
+                        "Invoice Ninja"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "digibyte-core"
+                    ],
+                    "publisher": [
+                        "DigiByte Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "namecoin"
+                    ],
+                    "publisher": [
+                        "Maciej Krüger"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vdinar"
+                    ],
+                    "publisher": [
+                        "Andrea Grande"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "net-worth"
+                    ],
+                    "publisher": [
+                        "Andreas Huber"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "uk-salary-calculator"
+                    ],
+                    "publisher": [
+                        "Oliver Smith"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "currate"
+                    ],
+                    "publisher": [
+                        "Facundo Batista"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "zeronet"
+                    ],
+                    "publisher": [
+                        "Maciej Krüger"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bdartlibrairie"
+                    ],
+                    "publisher": [
+                        "Raphael Borrelli"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cointop"
+                    ],
+                    "publisher": [
+                        "Miguel Mota"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "goldcoin-core"
+                    ],
+                    "publisher": [
+                        "Koray Biçer"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "reden"
+                    ],
+                    "publisher": [
+                        "Filip Bunkens"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "syscoin-core"
+                    ],
+                    "publisher": [
+                        "Willy Ko"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "xbts"
+                    ],
+                    "publisher": [
+                        "TechnoL0g"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "xmr-miner-gui"
+                    ],
+                    "publisher": [
+                        "LuNa Crypt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "denaro"
+                    ],
+                    "publisher": [
+                        "Nickvision"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "simplebudget"
+                    ],
+                    "publisher": [
+                        "John McDougall"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vertcoin-core"
+                    ],
+                    "publisher": [
+                        "vertion"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "copay"
+                    ],
+                    "publisher": [
+                        "BitPay, Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cra-dispute"
+                    ],
+                    "publisher": [
+                        "PressPage Entertainment Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "restic"
+                    ],
+                    "publisher": [
+                        "Dustin Krysak"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "3poskasse"
+                    ],
+                    "publisher": [
+                        "3POS GmbH"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "symbol-tax"
+                    ],
+                    "publisher": [
+                        "Sym Crypto"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fingrom"
+                    ],
+                    "publisher": [
+                        "Viachaslau Lyskouski"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "umami"
+                    ],
+                    "publisher": [
+                        "Umami"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cryptnox"
+                    ],
+                    "publisher": [
+                        "Cryptnox SA"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cryptowatch-myl0g"
+                    ],
+                    "publisher": [
+                        "Milo Gilad"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pivx-core"
+                    ],
+                    "publisher": [
+                        "Fuzzbawls"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bitticker"
+                    ],
+                    "publisher": [
+                        "Ian Smith"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "contasimple"
+                    ],
+                    "publisher": [
+                        "Contasimple S.L."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "p2pool"
+                    ],
+                    "publisher": [
+                        "James Tigert"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wagerr"
+                    ],
+                    "publisher": [
+                        "Wagerr"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "grin"
+                    ],
+                    "publisher": [
+                        "Quentin Le Sceller"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "groove-wallet"
+                    ],
+                    "publisher": [
+                        "Vedaant Bali"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "globaltoken"
+                    ],
+                    "publisher": [
+                        "GlobalToken Team"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "go-eth"
+                    ],
+                    "publisher": [
+                        "Ethereum Foundation"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "stox"
+                    ],
+                    "publisher": [
+                        "Joshua Peisach"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "diminutivecoin"
+                    ],
+                    "publisher": [
+                        "MadCatMining"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "proton-wallet"
+                    ],
+                    "publisher": [
+                        "Edwin Hashius"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "monento"
+                    ],
+                    "publisher": [
+                        "LadnySoft"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "minotaur"
+                    ],
+                    "publisher": [
+                        "minotaur"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "confidential-bitcoin"
+                    ],
+                    "publisher": [
+                        "Bitcoin Confidential"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vanillacash"
+                    ],
+                    "publisher": [
+                        "MadCatMining"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "groestlcoin-core"
+                    ],
+                    "publisher": [
+                        "Groestlcoin Core"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "amoveo-wallet"
+                    ],
+                    "publisher": [
+                        "Exan.tech"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "israeli-bank-scrapers-desktop"
+                    ],
+                    "publisher": [
+                        "Baruch Odem"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "xmrig"
+                    ],
+                    "publisher": [
+                        "James Tigert"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "xbts-light"
+                    ],
+                    "publisher": [
+                        "TechnoL0g"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "monacoin"
+                    ],
+                    "publisher": [
+                        "Vis Virial"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "peerunity-tpaw"
+                    ],
+                    "publisher": [
+                        "Tomas CaseyWilcox"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "daily-budget-planner"
+                    ],
+                    "publisher": [
+                        "X Soul Space"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "resulkaconsultas"
+                    ],
+                    "publisher": [
+                        "Treeunfe Tecnologia"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "electrum"
+                    ],
+                    "publisher": [
+                        "Tomas CaseyWilcox"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "parity"
+                    ],
+                    "publisher": [
+                        "Parity DevOps"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "lithospos"
+                    ],
+                    "publisher": [
+                        "LithosPOS Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "emercoin-tpaw"
+                    ],
+                    "publisher": [
+                        "Tomas CaseyWilcox"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "contractor"
+                    ],
+                    "publisher": [
+                        "Damien Hunter"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "velas-desktop-wallet"
+                    ],
+                    "publisher": [
+                        "Velas Dev"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mmex"
+                    ],
+                    "publisher": [
+                        "slodki"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "greenery"
+                    ],
+                    "publisher": [
+                        "Corey F Stedman"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "saymoney"
+                    ],
+                    "publisher": [
+                        "Weber IT & Apps"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "galleon"
+                    ],
+                    "publisher": [
+                        "Cryptonomic Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "litecoin-core"
+                    ],
+                    "publisher": [
+                        "Jared Rice Sr."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "siriustracker"
+                    ],
+                    "publisher": [
+                        "Iolar Demartini Junior"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "banana-accounting-plus"
+                    ],
+                    "publisher": [
+                        "Banana.ch SA"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bytz"
+                    ],
+                    "publisher": [
+                        "Bytz"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kite-zerodha"
+                    ],
+                    "publisher": [
+                        "Millennius Labs"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ioncore"
+                    ],
+                    "publisher": [
+                        "Ion coin developer"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "laurux"
+                    ],
+                    "publisher": [
+                        "damscot"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "nanowallet"
+                    ],
+                    "publisher": [
+                        "Nikhil Jha"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bunqdesktop"
+                    ],
+                    "publisher": [
+                        "bunqCommunity"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pivx"
+                    ],
+                    "publisher": [
+                        "dev"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "btcassistant"
+                    ],
+                    "publisher": [
+                        "Michał Maciaszek"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "denarius"
+                    ],
+                    "publisher": [
+                        "Metaspartan"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cryptochecker"
+                    ],
+                    "publisher": [
+                        "André Clérigo"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "arqma-electron-wallet"
+                    ],
+                    "publisher": [
+                        "arqtras"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "robot-advisor"
+                    ],
+                    "publisher": [
+                        "PressPage Entertainment Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bitcoin-core"
+                    ],
+                    "publisher": [
+                        "Bitcoin Core"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "lithos-pos-cds"
+                    ],
+                    "publisher": [
+                        "LithosPOS Inc"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vestin"
+                    ],
+                    "publisher": [
+                        "Fernando Pujaico Rivera"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "btc-wallet-tracking"
+                    ],
+                    "publisher": [
+                        "Sergey Tsymbal"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "flutter-shop"
+                    ],
+                    "publisher": [
+                        "EIGFA"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tradingview"
+                    ],
+                    "publisher": [
+                        "TradingView"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnucash"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "homebank"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "skrooge"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kmymoney"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ledger"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Education",
+            "applications": [
+                {
+                    "app_name": [
+                        "minuet"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kturtle"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sugarizer"
+                    ],
+                    "publisher": [
+                        "Lionel Laské"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "klettres"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kgeography"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "artikulate"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kbruch"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kalzium"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "parley"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hurdle"
+                    ],
+                    "publisher": [
+                        "hurdle Group Ltd"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "octave"
+                    ],
+                    "publisher": [
+                        "GNU Octave"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "labplot"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gcompris"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "s4a"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fab-agon-emulator"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "flash-cards"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wike"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "flightgear"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cryptool"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "marknote"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bridge-designer"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "plots"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "josm"
+                    ],
+                    "publisher": [
+                        "Michael Vogt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wordbook"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "salawat"
+                    ],
+                    "publisher": [
+                        "DarkBlackChocolate"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mcq-pulzion"
+                    ],
+                    "publisher": [
+                        "Pratik Daigavane"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qownnotes"
+                    ],
+                    "publisher": [
+                        "Patrizio Bekerle"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qtiplot-wrap"
+                    ],
+                    "publisher": [
+                        "marvinav"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "logiksim"
+                    ],
+                    "publisher": [
+                        "Christian Brugger"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "jgex"
+                    ],
+                    "publisher": [
+                        "Kovács Zoltán"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "learningml-desktop"
+                    ],
+                    "publisher": [
+                        "Juan David Rodríguez"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pyresistors"
+                    ],
+                    "publisher": [
+                        "Götz Christ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bbzcloud"
+                    ],
+                    "publisher": [
+                        "Leonie 🏳️‍🌈"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "heb12-desktop"
+                    ],
+                    "publisher": [
+                        "Ted Jameson"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gai-tools"
+                    ],
+                    "publisher": [
+                        "crown.hg"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "thonny"
+                    ],
+                    "publisher": [
+                        "Sameer Sharma"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dataexplore"
+                    ],
+                    "publisher": [
+                        "Damien Farrell"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "elements"
+                    ],
+                    "publisher": [
+                        "Anirban Dutta"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "digital-calculator"
+                    ],
+                    "publisher": [
+                        "Aditya R"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openscad"
+                    ],
+                    "publisher": [
+                        "Torsten Paul"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "linotte"
+                    ],
+                    "publisher": [
+                        "Ronan Mounès"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pymandelbrot"
+                    ],
+                    "publisher": [
+                        "Craig William Warner"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wyzepal"
+                    ],
+                    "publisher": [
+                        "WyzePal"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "exelearning"
+                    ],
+                    "publisher": [
+                        "eXeLearning"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openrocket"
+                    ],
+                    "publisher": [
+                        "OpenRocket"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sectrain"
+                    ],
+                    "publisher": [
+                        "Joe McManus"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "open-typer"
+                    ],
+                    "publisher": [
+                        "adazem009"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tux-math"
+                    ],
+                    "publisher": [
+                        "Jintao Yang"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "csven"
+                    ],
+                    "publisher": [
+                        "Ronald Sanchez"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "simple-flashcards"
+                    ],
+                    "publisher": [
+                        "Krille-chan"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "useful-periodic-table-lite"
+                    ],
+                    "publisher": [
+                        "Mind Trends LLC"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "duolingo-desktop"
+                    ],
+                    "publisher": [
+                        "hideo aoyama"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "heimer"
+                    ],
+                    "publisher": [
+                        "Jussi Lind"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "algobot"
+                    ],
+                    "publisher": [
+                        "ILM"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "maxima"
+                    ],
+                    "publisher": [
+                        "Peter Pall"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "harpwise"
+                    ],
+                    "publisher": [
+                        "Marc Ihm"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dino"
+                    ],
+                    "publisher": [
+                        "Aitzol Berasategi"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "logisim-evolution"
+                    ],
+                    "publisher": [
+                        "Logisim-Evolution"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cbetar2"
+                    ],
+                    "publisher": [
+                        "Meng-Yuan Huang"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "processing"
+                    ],
+                    "publisher": [
+                        "Processing"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "stellarium-daily"
+                    ],
+                    "publisher": [
+                        "Tanmoy Saha"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pymol-oss"
+                    ],
+                    "publisher": [
+                        "Stefan Glasenhardt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "elliptic-curve-plotter"
+                    ],
+                    "publisher": [
+                        "Stefan Kebekus"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mygeniusapp"
+                    ],
+                    "publisher": [
+                        "SEEDIZON SARLAU"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "word-by-word-game"
+                    ],
+                    "publisher": [
+                        "X Soul Space"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tuxtyping"
+                    ],
+                    "publisher": [
+                        "Jintao Yang"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnss-sdr-next"
+                    ],
+                    "publisher": [
+                        "Carles Fernandez"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "greenfoot"
+                    ],
+                    "publisher": [
+                        "DavidoTek"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "lumi"
+                    ],
+                    "publisher": [
+                        "Sebastian Rettig"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "interactive-data-editor"
+                    ],
+                    "publisher": [
+                        "Koushik Naskar"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pyplane"
+                    ],
+                    "publisher": [
+                        "Julian Tarquin Walsh"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bluej"
+                    ],
+                    "publisher": [
+                        "DavidoTek"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "makhber"
+                    ],
+                    "publisher": [
+                        "Mehdi Chinoune"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "edumips64"
+                    ],
+                    "publisher": [
+                        "Andrea Spadaccini"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mapton"
+                    ],
+                    "publisher": [
+                        "Mapton"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "oudedetai"
+                    ],
+                    "publisher": [
+                        "Nate"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "celestia-daily"
+                    ],
+                    "publisher": [
+                        "Tanmoy Saha"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "funkplot"
+                    ],
+                    "publisher": [
+                        "fritzone"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "np-dictionnaire"
+                    ],
+                    "publisher": [
+                        "Naifeos Production"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "iicalc"
+                    ],
+                    "publisher": [
+                        "TabulateJarl8"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "learnit"
+                    ],
+                    "publisher": [
+                        "Kyle Nitzsche"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wxmaxima"
+                    ],
+                    "publisher": [
+                        "Peter Pall"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "graphs"
+                    ],
+                    "publisher": [
+                        "Sjoerd Stendahl"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "maiss-lehrerapp"
+                    ],
+                    "publisher": [
+                        "Verlag J. Maiss GmbH"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "neowaveacademy"
+                    ],
+                    "publisher": [
+                        "NEO WAVE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bolls"
+                    ],
+                    "publisher": [
+                        "Богуслав Павлишинець"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "grades-panhellenic"
+                    ],
+                    "publisher": [
+                        "jim greasidis"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "wiki-txt"
+                    ],
+                    "publisher": [
+                        "01one"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kita"
+                    ],
+                    "publisher": [
+                        "Dan Bishop"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "hopsan"
+                    ],
+                    "publisher": [
+                        "Peter Nordin"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "biblemate"
+                    ],
+                    "publisher": [
+                        "Renato Attorri"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openscad-nightly"
+                    ],
+                    "publisher": [
+                        "Torsten Paul"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openscad"
+                    ],
+                    "publisher": [
+                        "Torsten Paul"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "marble"
+                    ],
+                    "publisher": [
+                        "Kubuntu Developers",
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kstars"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers",
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "stellarium"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pspp",
+                        "psppire"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "squeak-vm",
+                        "squeakvm"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tuxpaint"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "scilab-full-bin",
+                        "scilab-bin",
+                        "scilab-minimal-bin",
+                        "scilab-cli-bin"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gelemental"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Streaming",
+            "applications": [
+                {
+                    "app_name": [
+                        "spotify",
+                        "spotify-qt"
+                    ],
+                    "publisher": [
+                        "Spotify",
+                        "kraxie"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "noson"
+                    ],
+                    "publisher": [
+                        "Jean-Luc Barriere"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ncspot"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "spot"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "shortwave"
+                    ],
+                    "publisher": [
+                        "Alex Murray"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "podcasts"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "utube"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "music-radar"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "playlist-dl"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "cozy"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "olivia"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mousai"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mir-kiosk-kodi"
+                    ],
+                    "publisher": [
+                        "Alan Griffiths"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rundfunk"
+                    ],
+                    "publisher": [
+                        "Alexander Sattelmaier"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "google-play-music-desktop-player"
+                    ],
+                    "publisher": [
+                        "Chris Halse Rogers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "streamtuner2-dev"
+                    ],
+                    "publisher": [
+                        "mario"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mpv-wayland"
+                    ],
+                    "publisher": [
+                        "iomezk"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "musikcube"
+                    ],
+                    "publisher": [
+                        "clangen"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "psst-gui"
+                    ],
+                    "publisher": [
+                        "Graham Morrison"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "audible-for-linux"
+                    ],
+                    "publisher": [
+                        "Marcus Tomlinson"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "splayer"
+                    ],
+                    "publisher": [
+                        "imsyy"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tizonia"
+                    ],
+                    "publisher": [
+                        "Tizonia"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "4ktube"
+                    ],
+                    "publisher": [
+                        "Warlord Softwares ✅"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "headset"
+                    ],
+                    "publisher": [
+                        "Felipe Castillo"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "viztube"
+                    ],
+                    "publisher": [
+                        "Warlord Softwares ✅"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "music-assistant-server"
+                    ],
+                    "publisher": [
+                        "Giaever.online"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "poddr"
+                    ],
+                    "publisher": [
+                        "Marcus Sneitz"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pocket-casts"
+                    ],
+                    "publisher": [
+                        "Ricardo N Feliciano"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "airsonic"
+                    ],
+                    "publisher": [
+                        "Terence"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sonos-controller-unofficial"
+                    ],
+                    "publisher": [
+                        "Pascal Opitz"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "strimio-desktop"
+                    ],
+                    "publisher": [
+                        "Strimio"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "streambop"
+                    ],
+                    "publisher": [
+                        "SnailDOS"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "youtube-music-desktop-app"
+                    ],
+                    "publisher": [
+                        "Adler"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "astiga"
+                    ],
+                    "publisher": [
+                        "Astiga"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pocketyoutube"
+                    ],
+                    "publisher": [
+                        "ad"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sonobus"
+                    ],
+                    "publisher": [
+                        "Sonosaurus"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "g4music"
+                    ],
+                    "publisher": [
+                        "Sameer Sharma"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tube-converter"
+                    ],
+                    "publisher": [
+                        "Nickvision"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "butt"
+                    ],
+                    "publisher": [
+                        "Nils Büchner"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "plexmediaserver"
+                    ],
+                    "publisher": [
+                        "Plex, Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "youtube-dl"
+                    ],
+                    "publisher": [
+                        "Joe Borg"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "plex-htpc"
+                    ],
+                    "publisher": [
+                        "Plex, Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "filmographer"
+                    ],
+                    "publisher": [
+                        "Qiplex"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "plex-desktop"
+                    ],
+                    "publisher": [
+                        "Plex, Inc."
+                    ]
+                },
+                {
+                    "app_name": [
+                        "moviesquare"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qtubedl"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "get-iplayer"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "celluloid-twin"
+                    ],
+                    "publisher": [
+                        "Désiré Kyuyrii"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "video-downloader"
+                    ],
+                    "publisher": [
+                        "unrud"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "iptvnator"
+                    ],
+                    "publisher": [
+                        "fourgray"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "movx"
+                    ],
+                    "publisher": [
+                        "Mehran Majidi"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "celluloid"
+                    ],
+                    "publisher": [
+                        "Sameer Sharma"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "emby-server"
+                    ],
+                    "publisher": [
+                        "Emby"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "yt-dlp"
+                    ],
+                    "publisher": [
+                        "Graham Morrison"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "penguin-subtitle-player"
+                    ],
+                    "publisher": [
+                        "kristbaum"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "geforce-now-desktop"
+                    ],
+                    "publisher": [
+                        "André Gregor-Herrmann"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "should-i-watch-this"
+                    ],
+                    "publisher": [
+                        "Alexis Reigel"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "netflix-web"
+                    ],
+                    "publisher": [
+                        "Fatih YOLCU"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qqmusic-snap"
+                    ],
+                    "publisher": [
+                        "Tao Wang"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "freetube"
+                    ],
+                    "publisher": [
+                        "Sameer Sharma"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "vlc",
+                        "vlc-bin"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers",
+                        "VideoLAN"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "P2P (file sharing)",
+            "applications": [
+                {
+                    "app_name": [
+                        "frostwire"
+                    ],
+                    "publisher": [
+                        "FrostWire Team"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "transmission-gtk"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qbittorrent"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ktorrent"
+                    ],
+                    "publisher": [
+                        "Kubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "syncthing"
+                    ],
+                    "publisher": [
+                        "Syncthing",
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "onionshare",
+                        "onionshare-gui"
+                    ],
+                    "publisher": [
+                        "Micah Lee",
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rtorrent"
+                    ],
+                    "publisher": [
+                        "Ubuntu Developers"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "magic-wormhole"
+                    ],
+                    "publisher": [
+                        "Antoine Beaupré",
+                        "Ubuntu Developers"
+                    ]
+                }
+            ]
+        },
+        {
+            "category": "Games",
+            "applications": [
+                {
+                    "app_name": [
+                        "0ad"
+                    ],
+                    "publisher": [
+                        "Wildfire Games"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dosbox-x"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openra"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "warzone2100"
+                    ],
+                    "publisher": [
+                        "Warzone 2100 Project"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "retroarch"
+                    ],
+                    "publisher": [
+                        "hunterk"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tmnationsforever"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mc-installer"
+                    ],
+                    "publisher": [
+                        "James Tigert"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ohmygiraffe"
+                    ],
+                    "publisher": [
+                        "James Tigert"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "micropolis"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "quadrapassel"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "scummvm"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kfourinline"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kapman"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "klickety"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bomber"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kmahjongg"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kspaceduel"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kanagram"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "granatier"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "klines"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ksnakeduel"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "o3de"
+                    ],
+                    "publisher": [
+                        "Open 3D Engine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kubrick"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "palapeli"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kblackbox"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "steam"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "killbots"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "knetwalk"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kreversi"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "katomic"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ksudoku"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kigo"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kbreakout"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kgoldrunner"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "knavalbattle"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-sudoku"
+                    ],
+                    "publisher": [
+                        "Canonical"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "picmi"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kblocks"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ksirk"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bovo"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kiriki"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ktuberling"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "ksquares"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kjumpingcube"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kollision"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "blinken"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "konquest"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kbounce"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kshisen"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "kpat"
+                    ],
+                    "publisher": [
+                        "KDE"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "spectrum-analyser"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "azimuth"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "space-cadet-pinball"
+                    ],
+                    "publisher": [
+                        "Alex Murray"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "climate-trail"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "marsshooter"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "the-powder-toy"
+                    ],
+                    "publisher": [
+                        "James Carroll"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "obs-studio"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "bombsquad"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fab-agon-emulator"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "twinejs"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "warble"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "geforcenow"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mame"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "lightsoff"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "pioneer"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "spelunky"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "webcord"
+                    ],
+                    "publisher": [
+                        "সৌম্যদীপ ঘোষ"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-tetravex"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "moonlight"
+                    ],
+                    "publisher": [
+                        "Maximiliano Bertacchini"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-mines"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "rota"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "supertuxkart"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "starruler2"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "duckmarines"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-mahjongg"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "linuxtycoon"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dosbox-staging"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-klotski"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gog-galaxy-wine"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "iagno"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-robots"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "thrive"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mindustry"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "lapin"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "sdlpop"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "flightgear"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "mrrescue"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "shattered-pixel-dungeon"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "opentyrian"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "xonotic"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-taquin"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "discord"
+                    ],
+                    "publisher": [
+                        "Snapcrafters"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "widelands"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-chess"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "fifteenpuzzle"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "tali"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "qt-2048-snap"
+                    ],
+                    "publisher": [
+                        "keshavbhatt"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "openttd"
+                    ],
+                    "publisher": [
+                        "Lucy Llewellyn"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "gnome-nibbles"
+                    ],
+                    "publisher": [
+                        "Ken VanDine"
+                    ]
+                },
+                {
+                    "app_name": [
+                        "dynahack"
+                    ],
+                    "publisher": [
+                        "Alan Pope"
+                    ]
+                }
+            ]
         }
     ]
 }
