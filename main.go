@@ -218,9 +218,13 @@ func applicationsHandler(w http.ResponseWriter, r *http.Request) {
 			if strings.EqualFold(cat.Category, appData.Category) {
 				for _, app := range cat.Applications {
 					for j, name := range app.AppName {
-						if name == appData.AppName[0] && app.Publisher[j] == appData.Publisher[0] {
-							http.Error(w, "Application already exists in this category", http.StatusConflict)
-							return
+						for _, newName := range appData.AppName {
+							for _, newPub := range appData.Publisher {
+								if strings.EqualFold(name, newName) && strings.EqualFold(app.Publisher[j], newPub) {
+									http.Error(w, "Application already exists in this category", http.StatusConflict)
+									return
+								}
+							}
 						}
 					}
 				}
@@ -243,14 +247,14 @@ func applicationsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// searchHandler searches applications by name or publisher.
+// searchHandler searches applications by name or publisher across all categories.
 func searchHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	query := r.URL.Query().Get("q")
+	query := strings.TrimSpace(r.URL.Query().Get("q"))
 	if query == "" {
 		http.Error(w, "Query parameter is required", http.StatusBadRequest)
 		return
@@ -259,30 +263,40 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 	store.mu.RLock()
 	defer store.mu.RUnlock()
 
-	matchingCategory := Category{
-		Category:     "Search Results",
-		Applications: []Application{},
-	}
-
+	matchingCategories := []Category{}
 	query = strings.ToLower(query)
+
 	for _, category := range store.LinuxCategories {
+		matchingApps := []Application{}
 		for _, app := range category.Applications {
+			matches := false
 			for i, name := range app.AppName {
 				if strings.Contains(strings.ToLower(name), query) || strings.Contains(strings.ToLower(app.Publisher[i]), query) {
-					matchingCategory.Applications = append(matchingCategory.Applications, app)
+					matches = true
 					break
 				}
 			}
+			if matches {
+				matchingApps = append(matchingApps, app)
+			}
+		}
+		if len(matchingApps) > 0 {
+			matchingCategories = append(matchingCategories, Category{
+				Category:     category.Category,
+				Applications: matchingApps,
+			})
 		}
 	}
 
-	if len(matchingCategory.Applications) == 0 {
+	if len(matchingCategories) == 0 {
 		http.Error(w, "No applications found", http.StatusNotFound)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(matchingCategory); err != nil {
+	if err := json.NewEncoder(w).Encode(struct {
+		LinuxCategories []Category `json:"linuxCategories"`
+	}{matchingCategories}); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
 }
@@ -356,13 +370,20 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 			exists := false
 			for _, existingApp := range existingCat.Applications {
 				for j, name := range existingApp.AppName {
-					if name == app.AppName[0] && existingApp.Publisher[j] == app.Publisher[0] {
-						exists = true
+					for _, newName := range app.AppName {
+						for _, newPub := range app.Publisher {
+							if strings.EqualFold(name, newName) && strings.EqualFold(existingApp.Publisher[j], newPub) {
+								exists = true
+								break
+							}
+						}
+						if exists {
+							break
+						}
+					}
+					if exists {
 						break
 					}
-				}
-				if exists {
-					break
 				}
 			}
 
@@ -457,11 +478,13 @@ func updateApplicationHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(cat.Category, updateData.Category) {
 			for j, app := range cat.Applications {
 				for k, name := range app.AppName {
-					if name == updateData.OldAppName && app.Publisher[k] == updateData.OldPublisher {
-						store.LinuxCategories[i].Applications[j].AppName[k] = updateData.NewAppName[0]
-						store.LinuxCategories[i].Applications[j].Publisher[k] = updateData.NewPublisher[0]
+					if strings.EqualFold(name, updateData.OldAppName) && strings.EqualFold(app.Publisher[k], updateData.OldPublisher) {
+						store.LinuxCategories[i].Applications[j].AppName = updateData.NewAppName
+						store.LinuxCategories[i].Applications[j].Publisher = updateData.NewPublisher
 						delete(store.RecentApps, fmt.Sprintf("%s:%s:%s", updateData.Category, updateData.OldAppName, updateData.OldPublisher))
-						store.RecentApps[fmt.Sprintf("%s:%s:%s", updateData.Category, updateData.NewAppName[0], updateData.NewPublisher[0])] = time.Now()
+						for i, name := range updateData.NewAppName {
+							store.RecentApps[fmt.Sprintf("%s:%s:%s", updateData.Category, name, updateData.NewPublisher[i])] = time.Now()
+						}
 						w.WriteHeader(http.StatusOK)
 						return
 					}
@@ -498,7 +521,7 @@ func deleteApplicationHandler(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(cat.Category, category) {
 			for j, app := range cat.Applications {
 				for k, name := range app.AppName {
-					if name == appName && app.Publisher[k] == publisher {
+					if strings.EqualFold(name, appName) && strings.EqualFold(app.Publisher[k], publisher) {
 						// Remove the specific app name and publisher
 						store.LinuxCategories[i].Applications[j].AppName = append(app.AppName[:k], app.AppName[k+1:]...)
 						store.LinuxCategories[i].Applications[j].Publisher = append(app.Publisher[:k], app.Publisher[k+1:]...)

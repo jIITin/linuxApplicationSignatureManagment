@@ -496,7 +496,7 @@
         .app-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 14px;
         }
 
@@ -532,6 +532,25 @@
 
         .dark-mode .app-publisher {
             color: #a3bffa;
+        }
+
+        .app-details {
+            margin-bottom: 18px;
+        }
+
+        .app-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .app-details li {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: #1d1d1f;
+        }
+
+        .dark-mode .app-details li {
+            color: #e8ecef;
         }
 
         .app-actions {
@@ -820,7 +839,7 @@
 
             .theme-toggle {
                 top: 16px;
-                right: 16px;
+                right: 1610px;
             }
         }
     </style>
@@ -904,12 +923,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="appName">Application Name:</label>
-                    <input type="text" id="appName" placeholder="Enter application name" required>
+                    <label for="appName">Application Name(s) (comma-separated):</label>
+                    <input type="text" id="appName" placeholder="Enter application names" required>
                 </div>
                 <div class="form-group">
-                    <label for="appPublisher">Publisher/Vendor:</label>
-                    <input type="text" id="appPublisher" placeholder="Enter publisher name" required>
+                    <label for="appPublisher">Publisher(s)/Vendor(s) (comma-separated):</label>
+                    <input type="text" id="appPublisher" placeholder="Enter publisher names" required>
                 </div>
                 <button type="submit" class="btn">Add to Security Portfolio</button>
             </form>
@@ -972,12 +991,12 @@
                     <input type="text" id="editOldPublisher" placeholder="Current publisher name" required readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editNewAppName">New Application Name:</label>
-                    <input type="text" id="editNewAppName" placeholder="Enter new application name" required>
+                    <label for="editNewAppName">New Application Name(s) (comma-separated):</label>
+                    <input type="text" id="editNewAppName" placeholder="Enter new application names" required>
                 </div>
                 <div class="form-group">
-                    <label for="editNewPublisher">New Publisher/Vendor:</label>
-                    <input type="text" id="editNewPublisher" placeholder="Enter new publisher name" required>
+                    <label for="editNewPublisher">New Publisher(s)/Vendor(s) (comma-separated):</label>
+                    <input type="text" id="editNewPublisher" placeholder="Enter new publisher names" required>
                 </div>
                 <button type="submit" class="btn btn-edit">Update Signature</button>
             </form>
@@ -1076,12 +1095,16 @@
             try {
                 const url = category ? `${API_BASE}/applications?category=${encodeURIComponent(category)}` : `${API_BASE}/applications`;
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to load applications');
+                }
                 const data = await response.json();
                 
                 currentData = data;
                 displayApplications(data, category);
             } catch (error) {
                 console.error('Error loading applications:', error);
+                document.getElementById('applicationsContainer').innerHTML = '<p>Error loading applications</p>';
             }
         }
 
@@ -1108,43 +1131,46 @@
             const container = document.getElementById('applicationsContainer');
             container.innerHTML = '';
             
-            const categories = selectedCategory && data.category ? [data] : data.linuxCategories || [];
+            const categories = isSearch || !selectedCategory ? data.linuxCategories || [] : [data];
             
-            if (categories.length === 0) {
+            if (!categories || categories.length === 0) {
                 container.innerHTML = '<p>No applications found</p>';
                 return;
             }
 
             categories.forEach((category, index) => {
-                category.applications.forEach(app => {
-                    app.app_name.forEach((name, i) => {
-                        if (i < app.publisher.length) {
-                            const appCard = document.createElement('div');
-                            appCard.className = 'app-card';
-                            appCard.style.setProperty('--i', index);
-                            
-                            appCard.innerHTML = `
-                                <div class="app-header">
-                                    <div class="app-name">${name}</div>
-                                    <div class="app-category">${category.category}</div>
-                                </div>
-                                <div class="app-publisher">Publisher: ${app.publisher[i]}</div>
-                                <div class="app-actions">
-                                    <button class="btn btn-small btn-danger" onclick="deleteApplication('${category.category}', '${name}', '${app.publisher[i]}')">
-                                        🗑️ Remove
-                                    </button>
-                                    <button class="btn btn-small btn-edit" onclick="openEditModal('${category.category}', '${name}', '${app.publisher[i]}')">
-                                        ✏️ Edit
-                                    </button>
-                                    <button class="btn btn-small" onclick="downloadByCategory('${category.category}')">
-                                        📥 Export Category
-                                    </button>
-                                </div>
-                            `;
-                            
-                            container.appendChild(appCard);
-                        }
-                    });
+                category.applications.forEach((app, appIndex) => {
+                    const appCard = document.createElement('div');
+                    appCard.className = 'app-card';
+                    appCard.style.setProperty('--i', index + appIndex);
+                    
+                    const names = app.app_name.join(', ');
+                    const publishers = app.publisher.join(', ');
+                    
+                    appCard.innerHTML = `
+                        <div class="app-header">
+                            <div class="app-name">${names}</div>
+                            <div class="app-category">${category.category}</div>
+                        </div>
+                        <div class="app-details">
+                            <ul>
+                                ${app.app_name.map((name, i) => `<li>Name: ${name} (Publisher: ${app.publisher[i] || 'Unknown'})</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="app-actions">
+                            <button class="btn btn-small btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}', '${app.publisher[0] || ''}')">
+                                🗑️ Remove
+                            </button>
+                            <button class="btn btn-small btn-edit" onclick="openEditModal('${category.category}', '${app.app_name.join(',')}', '${app.publisher.join(',')}')">
+                                ✏️ Edit
+                            </button>
+                            <button class="btn btn-small" onclick="downloadByCategory('${category.category}')">
+                                📥 Export Category
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(appCard);
                 });
             });
         }
@@ -1257,10 +1283,18 @@
         document.getElementById('addAppForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            const appNames = document.getElementById('appName').value.split(',').map(s => s.trim()).filter(s => s);
+            const publishers = document.getElementById('appPublisher').value.split(',').map(s => s.trim()).filter(s => s);
+            
+            if (appNames.length !== publishers.length) {
+                showMessage('addAppError', 'Number of application names must match number of publishers');
+                return;
+            }
+            
             const appData = {
                 category: document.getElementById('appCategory').value,
-                app_name: [document.getElementById('appName').value],
-                publisher: [document.getElementById('appPublisher').value]
+                app_name: appNames,
+                publisher: publishers
             };
             
             try {
@@ -1321,12 +1355,20 @@
         document.getElementById('editAppForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            const newAppNames = document.getElementById('editNewAppName').value.split(',').map(s => s.trim()).filter(s => s);
+            const newPublishers = document.getElementById('editNewPublisher').value.split(',').map(s => s.trim()).filter(s => s);
+            
+            if (newAppNames.length !== newPublishers.length) {
+                showMessage('editAppError', 'Number of new application names must match number of new publishers');
+                return;
+            }
+            
             const editData = {
                 category: document.getElementById('editAppCategory').value,
                 old_app_name: document.getElementById('editOldAppName').value,
                 old_publisher: document.getElementById('editOldPublisher').value,
-                new_app_name: [document.getElementById('editNewAppName').value],
-                new_publisher: [document.getElementById('editNewPublisher').value]
+                new_app_name: newAppNames,
+                new_publisher: newPublishers
             };
             
             try {
@@ -1368,12 +1410,12 @@
             });
         }
 
-        function openEditModal(category, appName, publisher) {
+        function openEditModal(category, appNames, publishers) {
             document.getElementById('editAppCategory').value = category;
-            document.getElementById('editOldAppName').value = appName;
-            document.getElementById('editOldPublisher').value = publisher;
-            document.getElementById('editNewAppName').value = '';
-            document.getElementById('editNewPublisher').value = '';
+            document.getElementById('editOldAppName').value = appNames.split(',')[0];
+            document.getElementById('editOldPublisher').value = publishers.split(',')[0] || '';
+            document.getElementById('editNewAppName').value = appNames;
+            document.getElementById('editNewPublisher').value = publishers;
             openModal('editAppModal');
         }
 
@@ -1463,7 +1505,7 @@
 
         // Delete application
         async function deleteApplication(category, appName, publisher) {
-            if (!confirm(`Are you sure you want to remove "${appName}" (${publisher}) from the "${category}" category?`)) {
+            if (!confirm(`Are you sure you want to remove "${appName}" (${publisher || 'Unknown'}) from the "${category}" category?`)) {
                 return;
             }
             
