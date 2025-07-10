@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linux Application Signature Management</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,76 +14,66 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #FFFFFF;
             min-height: 100vh;
-            color: #ffffff;
+            color: #333333;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px;
+            animation: fadeIn 0.5s ease;
         }
 
         .header {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 32px;
+            background: #FFFFFF;
+            padding: 32px;
+            margin-bottom: 24px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(79, 70, 229, 0.1));
-            z-index: -1;
+            border-bottom: 2px solid #005BAC;
+            animation: slideInDown 0.5s ease;
         }
 
         .header h1 {
-            font-size: 3rem;
+            font-size: 2.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #a855f7, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-            letter-spacing: -0.02em;
+            color: #000000;
+            margin-bottom: 12px;
         }
 
         .header p {
-            font-size: 1.25rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.125rem;
+            color: #555555;
             font-weight: 400;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 32px;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 24px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: slideInUp 0.5s ease both;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 91, 172, 0.2);
+            border-color: #005BAC;
         }
 
         .stat-card::before {
@@ -90,115 +81,83 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1));
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #005BAC, #0077B6);
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: -1;
         }
 
         .stat-card:hover::before {
             opacity: 1;
         }
 
-        .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(168, 85, 247, 0.3);
-        }
-
         .stat-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #005BAC;
             margin-bottom: 8px;
-            line-height: 1;
         }
 
         .stat-label {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
+            color: #555555;
+            font-size: 1rem;
             font-weight: 500;
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 32px;
-            margin-bottom: 32px;
-        }
-
-        .content-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 32px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.05), rgba(79, 70, 229, 0.05));
-            z-index: -1;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 24px;
         }
 
         .sidebar {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 32px;
-            height: fit-content;
-            position: relative;
-            overflow: hidden;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 24px;
+            animation: slideInRight 0.5s ease;
         }
 
-        .sidebar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.05), rgba(79, 70, 229, 0.05));
-            z-index: -1;
+        .content-panel {
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 24px;
+            animation: slideInLeft 0.5s ease;
         }
 
         .section-title {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 24px;
-            color: #ffffff;
+            margin-bottom: 20px;
+            color: #000000;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            color: white;
+            background: #005BAC;
+            color: #FFFFFF;
             border: none;
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
             margin: 6px;
             position: relative;
             overflow: hidden;
             text-transform: none;
-            letter-spacing: 0.01em;
+        }
+
+        .btn:hover {
+            background: #004080;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 91, 172, 0.3);
         }
 
         .btn::before {
@@ -209,90 +168,80 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
+            transition: left 0.4s ease;
         }
 
         .btn:hover::before {
             left: 100%;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
-        }
-
         .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+            background: #D32F2F;
         }
 
         .btn-danger:hover {
-            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+            background: #B71C1C;
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.9);
+            color: #333333;
             font-size: 1rem;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            padding: 12px 16px;
+            background: #F5F5F5;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
             font-size: 1rem;
-            color: #ffffff;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            color: #333333;
+            transition: border-color 0.3s ease, transform 0.2s ease;
         }
 
         .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: #a855f7;
-            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
-            background: rgba(255, 255, 255, 0.08);
+            border-color: #005BAC;
+            box-shadow: 0 0 0 2px rgba(0, 91, 172, 0.2);
+            transform: scale(1.01);
         }
 
         .form-group input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: #888888;
         }
 
         .category-filter {
-            margin-bottom: 24px;
-        }
-
-        .category-filter select {
-            width: 100%;
-            padding: 16px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            font-size: 1rem;
-            color: #ffffff;
-            backdrop-filter: blur(10px);
+            margin-bottom: Helvetica
         }
 
         .applications-grid {
             display: grid;
-            gap: 20px;
+            gap: 16px;
         }
 
         .app-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             position: relative;
             overflow: hidden;
+            animation: slideInUp 0.5s ease both;
+        }
+
+        .app-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 91, 172, 0.2);
+            border-color: #005BAC;
         }
 
         .app-card::before {
@@ -300,63 +249,56 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.1));
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #005BAC, #0077B6);
             opacity: 0;
             transition: opacity 0.3s ease;
-            z-index: -1;
         }
 
         .app-card:hover::before {
             opacity: 1;
         }
 
-        .app-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(168, 85, 247, 0.3);
-        }
-
         .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .app-name {
             font-weight: 600;
-            color: #ffffff;
-            font-size: 1.25rem;
+            color: #333333;
+            font-size: 1.125rem;
         }
 
         .app-category {
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
+            background: #005BAC;
+            color: #FFFFFF;
+            padding: 6px 14px;
+            border-radius: 16px;
             font-size: 0.875rem;
             font-weight: 500;
             white-space: nowrap;
         }
 
         .app-publisher {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
-            margin-bottom: 16px;
+            color: #555555;
+            font-size: 0.875rem;
+            margin-bottom: 12px;
         }
 
         .app-actions {
-            margin-top: 20px;
+            margin-top: 16px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-small {
-            padding: 8px 16px;
+            padding: 8px 14px;
             font-size: 0.875rem;
             border-radius: 8px;
-            font-weight: 500;
         }
 
         .modal {
@@ -367,76 +309,64 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            background: #FFFFFF;
             margin: 5% auto;
-            padding: 40px;
-            border-radius: 24px;
+            padding: 24px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 520px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.05), rgba(59, 130, 246, 0.05));
-            z-index: -1;
+            max-width: 480px;
+            border: 1px solid #E5E5E5;
+            animation: scaleIn 0.3s ease;
         }
 
         .modal-content h2 {
-            color: #ffffff;
-            margin-bottom: 24px;
-            font-size: 1.75rem;
+            color: #333333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
         .close {
-            color: rgba(255, 255, 255, 0.6);
+            color: #888888;
             float: right;
-            font-size: 32px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
-            line-height: 1;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
         .close:hover {
-            color: #ffffff;
+            color: #333333;
+            transform: scale(1.2);
         }
 
         .chart-container {
-            margin-top: 32px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 24px;
+            padding: 20px;
+            background: #F5F5F5;
+            border-radius: 12px;
+            border: 1px solid #E5E5E5;
+            animation: fadeIn 0.5s ease;
         }
 
         .file-upload {
-            border: 2px dashed rgba(168, 85, 247, 0.5);
-            border-radius: 16px;
-            padding: 40px;
+            border: 2px dashed #E0E0E0;
+            border-radius: 12px;
+            padding: 24px;
             text-align: center;
-            margin: 24px 0;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.02);
+            margin: 20px 0;
+            background: #F5F5F5;
+            transition: border-color 0.3s ease, transform 0.2s ease;
         }
 
         .file-upload:hover {
-            background: rgba(168, 85, 247, 0.05);
-            border-color: rgba(168, 85, 247, 0.7);
+            border-color: #005BAC;
+            transform: scale(1.02);
         }
 
         .file-upload input[type="file"] {
@@ -445,65 +375,103 @@
 
         .file-upload label {
             cursor: pointer;
-            color: #a855f7;
-            font-weight: 600;
-            font-size: 1.1rem;
+            color: #005BAC;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            color: #004080;
         }
 
         .file-upload p {
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 8px;
+            color: #555555;
+            margin-top: 6px;
+            font-size: 0.875rem;
         }
 
         .success-message, .error-message {
-            padding: 16px 24px;
-            border-radius: 12px;
-            margin: 16px 0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 12px 0;
             display: none;
             font-weight: 500;
+            animation: fadeIn 0.3s ease;
         }
 
         .success-message {
-            background: rgba(34, 197, 94, 0.1);
-            color: #10b981;
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid #4CAF50;
         }
 
         .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: #FFEBEE;
+            color: #D32F2F;
+            border: 1px solid #D32F2F;
         }
 
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
+            background: #F5F5F5;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(168, 85, 247, 0.5);
-            border-radius: 4px;
+            background: #005BAC;
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(168, 85, 247, 0.7);
+            background: #004080;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
         @media (max-width: 768px) {
             .main-content {
-                grid-template-columns: 1fr;
+                flex-direction: column;
             }
             
             .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                grid-template-columns: 1fr;
             }
 
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
 
             .container {
@@ -511,13 +479,13 @@
             }
 
             .header, .content-panel, .sidebar {
-                padding: 24px;
+                padding: 16px;
             }
 
             .app-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 12px;
+                gap: 10px;
             }
 
             .app-category {
@@ -549,6 +517,21 @@
         </div>
 
         <div class="main-content">
+            <div class="sidebar">
+                <div class="section-title">
+                    ⚡ Security Operations
+                </div>
+                
+                <button class="btn" onclick="openModal('addAppModal')">➕ Secure Application</button>
+                <button class="btn" onclick="openModal('addCategoryModal')">📁 Create Category</button>
+                <button class="btn" onclick="openModal('uploadModal')">📤 Bulk Import</button>
+                <button class="btn" onclick="downloadData()">📥 Export Portfolio</button>
+
+                <div class="chart-container">
+                    <canvas id="categoryChart" width="300" height="200"></canvas>
+                </div>
+            </div>
+
             <div class="content-panel">
                 <div class="section-title">
                     🔐 Application Portfolio
@@ -564,28 +547,13 @@
                     <!-- Applications will be loaded here -->
                 </div>
             </div>
-
-            <div class="sidebar">
-                <div class="section-title">
-                    ⚡ Security Operations
-                </div>
-                
-                <button class="btn" onclick="openModal('addAppModal')">➕ Secure Application</button>
-                <button class="btn" onclick="openModal('addCategoryModal')">📁 Create Category</button>
-                <button class="btn" onclick="openModal('uploadModal')">📤 Bulk Import</button>
-                <button class="btn" onclick="downloadData()">📥 Export Portfolio</button>
-
-                <div class="chart-container">
-                    <canvas id="categoryChart" width="300" height="200"></canvas>
-                </div>
-            </div>
         </div>
     </div>
 
     <!-- Add Application Modal -->
     <div id="addAppModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('addAppModal')">&times;</span>
+            <span class="close" onclick="closeModal('addAppModal')">×</span>
             <h2>Secure New Application</h2>
             <div class="success-message" id="addAppSuccess"></div>
             <div class="error-message" id="addAppError"></div>
@@ -612,7 +580,7 @@
     <!-- Add Category Modal -->
     <div id="addCategoryModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('addCategoryModal')">&times;</span>
+            <span class="close" onclick="closeModal('addCategoryModal')">×</span>
             <h2>Create Security Category</h2>
             <div class="success-message" id="addCategorySuccess"></div>
             <div class="error-message" id="addCategoryError"></div>
@@ -629,7 +597,7 @@
     <!-- Upload Modal -->
     <div id="uploadModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('uploadModal')">&times;</span>
+            <span class="close" onclick="closeModal('uploadModal')">×</span>
             <h2>Bulk Security Import</h2>
             <div class="success-message" id="uploadSuccess"></div>
             <div class="error-message" id="uploadError"></div>
@@ -679,7 +647,6 @@
                 const categoryFilter = document.getElementById('categoryFilter');
                 const appCategory = document.getElementById('appCategory');
                 
-                // Clear existing options
                 categoryFilter.innerHTML = '<option value="">All Security Categories</option>';
                 appCategory.innerHTML = '<option value="">Select Security Category</option>';
                 
@@ -741,7 +708,7 @@
             });
         }
 
-        // Update chart with dark theme
+        // Update chart with Samsung-inspired theme
         function updateChart(categoryCounts) {
             const ctx = document.getElementById('categoryChart').getContext('2d');
             
@@ -759,17 +726,17 @@
                     datasets: [{
                         data: data,
                         backgroundColor: [
-                            '#a855f7',
-                            '#3b82f6',
-                            '#06b6d4',
-                            '#10b981',
-                            '#f59e0b',
-                            '#ef4444',
-                            '#8b5cf6',
-                            '#06b6d4'
+                            '#005BAC',
+                            '#0077B6',
+                            '#D32F2F',
+                            '#4CAF50',
+                            '#FF9800',
+                            '#673AB7',
+                            '#0288D1',
+                            '#009688'
                         ],
-                        borderWidth: 0,
-                        borderColor: 'transparent'
+                        borderWidth: 1,
+                        borderColor: '#FFFFFF'
                     }]
                 },
                 options: {
@@ -779,15 +746,19 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                padding: 20,
+                                padding: 15,
                                 usePointStyle: true,
-                                color: 'rgba(255, 255, 255, 0.8)',
+                                color: '#333333',
                                 font: {
                                     size: 12,
-                                    family: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+                                    family: 'Roboto, sans-serif'
                                 }
                             }
                         }
+                    },
+                    animation: {
+                        duration: 1200,
+                        easing: 'easeOutQuart'
                     }
                 }
             });
@@ -869,7 +840,6 @@
 
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
-            // Clear messages
             const modal = document.getElementById(modalId);
             const messages = modal.querySelectorAll('.success-message, .error-message');
             messages.forEach(msg => {
@@ -947,7 +917,7 @@
                 
                 if (response.ok) {
                     const result = await response.json();
-                    showMessage('uploadSuccess', `Import successful! Added ${result.addedCategories} categories and ${result.addedApplications} applications.`);
+                    showMessage('uploadSuccess', `Import successful! Added ${result.addedCategories} categories and ${result.addedApplications} applications`);
                     loadStats();
                     loadCategories();
                     loadApplications();
