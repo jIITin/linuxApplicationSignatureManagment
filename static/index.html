@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linux Application Signature Management</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,558 +14,464 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', Roboto, sans-serif;
-            background: #f5f5f7;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
             min-height: 100vh;
-            color: #1d1d1f;
-            line-height: 1.5;
-            cursor: none;
+            line-height: 1.6;
+            cursor: auto;
             overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        body.dark-mode {
-            background: #1c2526;
-            color: #e8ecef;
-        }
-
-        .custom-cursor {
-            position: fixed;
-            width: 12px;
-            height: 12px;
-            background: rgba(29, 29, 31, 0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.2s ease, background 0.2s ease, width 0.2s ease, height 0.2s ease;
-        }
-
-        .custom-cursor.interactive {
-            transform: scale(2);
-            background: rgba(29, 29, 31, 0.5);
-        }
-
-        .dark-mode .custom-cursor {
-            background: rgba(232, 236, 239, 0.3);
-        }
-
-        .dark-mode .custom-cursor.interactive {
-            background: rgba(232, 236, 239, 0.5);
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+            color: #1d1d1f;
         }
 
         .container {
-            max-width: 1440px;
+            max-width: 1800px;
             margin: 0 auto;
-            padding: 32px;
+            padding: 2rem;
         }
 
         .header {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-radius: 18px;
-            padding: 48px;
-            margin-bottom: 40px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
             text-align: center;
-            animation: slideIn 0.6s ease-out;
             position: relative;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
-        .dark-mode .header {
-            background: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        .light-mode .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 12px;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00ffff;
+            margin-bottom: 0.5rem;
             letter-spacing: -0.02em;
+            text-transform: uppercase;
         }
 
-        .dark-mode .header h1 {
-            color: #e8ecef;
+        .light-mode .header h1 {
+            color: #0071e3;
         }
 
         .header p {
-            font-size: 1.2rem;
-            color: #6e6e73;
-            font-weight: 400;
+            font-size: 1.4rem;
+            color: #a0a0a0;
         }
 
-        .dark-mode .header p {
-            color: #a3bffa;
+        .light-mode .header p {
+            color: #6e6e73;
         }
 
         .theme-toggle {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 48px;
-            height: 28px;
-            background: #d2d2d7;
-            border-radius: 14px;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 1.8rem;
+            background: #1c2526;
+            border-radius: 1rem;
             cursor: pointer;
-            transition: background 0.3s ease;
             display: flex;
             align-items: center;
-            padding: 2px;
+            padding: 0.2rem;
+            border: 1px solid #00ffff;
+        }
+
+        .light-mode .theme-toggle {
+            background: #d2d2d7;
+            border-color: #0071e3;
         }
 
         .theme-toggle .knob {
-            width: 24px;
-            height: 24px;
-            background: #ffffff;
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #00ffff;
             border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background 0.3s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .theme-toggle.active {
-            background: #5856d6;
+        .light-mode .theme-toggle .knob {
+            background: #ffffff;
         }
 
         .theme-toggle.active .knob {
-            transform: translateX(20px);
-            background: #ffffff;
+            transform: translateX(1.2rem);
         }
 
-        .theme-toggle:hover .knob {
-            transform: scale(1.1);
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .theme-toggle.active:hover .knob {
-            transform: translateX(20px) scale(1.1);
+        .stat-card {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .light-mode .stat-card::before {
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.3) 0%, transparent 70%);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00ffff;
+        }
+
+        .light-mode .stat-number {
+            color: #0071e3;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .light-mode .stat-label {
+            color: #6e6e73;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        .content-panel {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .content-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .sidebar {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .light-mode .section-title {
+            color: #0071e3;
         }
 
         .search-bar {
-            margin-bottom: 24px;
             position: relative;
-            animation: fadeIn 0.6s ease-out;
+            margin-bottom: 1.5rem;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 12px 16px 12px 40px;
-            background: #f5f5f7;
-            border: 1px solid #d2d2d7;
-            border-radius: 12px;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
             font-size: 1rem;
-            color: #1d1d1f;
+            color: #e0e0e0;
             transition: all 0.3s ease;
         }
 
-        .dark-mode .search-bar input {
-            background: #2c3e50;
-            border-color: #4a5568;
-            color: #e8ecef;
+        .light-mode .search-bar input {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
+            color: #1d1d1f;
         }
 
         .search-bar input:focus {
             outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .search-bar input:focus {
             border-color: #0071e3;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
-            background: #ffffff;
-        }
-
-        .dark-mode .search-bar input:focus {
-            background: #2c3e50;
-            box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.3);
-        }
-
-        .search-bar input::placeholder {
-            color: #6e6e73;
-        }
-
-        .dark-mode .search-bar input::placeholder {
-            color: #a3bffa;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
         }
 
         .search-bar::before {
             content: '🔍';
             position: absolute;
-            left: 16px;
+            left: 1rem;
             top: 50%;
             transform: translateY(-50%);
+            color: #a0a0a0;
+        }
+
+        .light-mode .search-bar::before {
             color: #6e6e73;
-            font-size: 1.2rem;
-        }
-
-        .dark-mode .search-bar::before {
-            color: #a3bffa;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-radius: 18px;
-            padding: 32px;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
-            animation: bounceIn 0.8s ease-out forwards;
-            animation-delay: calc(0.1s * var(--i));
-        }
-
-        .dark-mode .stat-card {
-            background: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .dark-mode .stat-card:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 8px;
-            line-height: 1;
-        }
-
-        .dark-mode .stat-number {
-            color: #e8ecef;
-        }
-
-        .stat-label {
-            color: #6e6e73;
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-
-        .dark-mode .stat-label {
-            color: #a3bffa;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 32px;
-            margin-bottom: 40px;
-        }
-
-        .content-panel {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-radius: 18px;
-            padding: 32px;
-            animation: slideIn 0.6s ease-out;
-        }
-
-        .dark-mode .content-panel {
-            background: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-radius: 18px;
-            padding: 32px;
-            height: fit-content;
-            animation: slideIn 0.6s ease-out;
-        }
-
-        .dark-mode .sidebar {
-            background: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #1d1d1f;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .dark-mode .section-title {
-            color: #e8ecef;
-        }
-
-        .btn {
-            background: #0071e3;
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            margin: 8px;
-            position: relative;
-            overflow: hidden;
-            text-transform: none;
-            letter-spacing: 0;
-        }
-
-        .dark-mode .btn {
-            background: #5856d6;
-        }
-
-        .btn:hover {
-            background: #005bb5;
-            transform: translateY(-2px) scale(1.05) rotate(2deg);
-            box-shadow: 0 6px 12px rgba(0, 113, 227, 0.3);
-        }
-
-        .dark-mode .btn:hover {
-            background: #4a48b5;
-            box-shadow: 0 6px 12px rgba(88, 86, 214, 0.3);
-        }
-
-        .btn-danger {
-            background: #ff2d55;
-        }
-
-        .dark-mode .btn-danger {
-            background: #ff6b81;
-        }
-
-        .btn-danger:hover {
-            background: #cc2444;
-            box-shadow: 0 6px 12px rgba(255, 45, 85, 0.3);
-        }
-
-        .dark-mode .btn-danger:hover {
-            background: #d81b60;
-            box-shadow: 0 6px 12px rgba(255, 107, 129, 0.3);
-        }
-
-        .btn-edit {
-            background: #5856d6;
-        }
-
-        .dark-mode .btn-edit {
-            background: #7f8ff4;
-        }
-
-        .btn-edit:hover {
-            background: #4a48b5;
-            box-shadow: 0 6px 12px rgba(88, 86, 214, 0.3);
-        }
-
-        .dark-mode .btn-edit:hover {
-            background: #6b7280;
-            box-shadow: 0 6px 12px rgba(127, 143, 244, 0.3);
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #1d1d1f;
-            font-size: 0.95rem;
-        }
-
-        .dark-mode .form-group label {
-            color: #e8ecef;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px 16px;
-            background: #f5f5f7;
-            border: 1px solid #d2d2d7;
-            border-radius: 12px;
-            font-size: 1rem;
-            color: #1d1d1f;
-            transition: all 0.3s ease;
-        }
-
-        .dark-mode .form-group input,
-        .dark-mode .form-group select {
-            background: #2c3e50;
-            border-color: #4a5568;
-            color: #e8ecef;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #0071e3;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
-            background: #ffffff;
-        }
-
-        .dark-mode .form-group input:focus,
-        .dark-mode .form-group select:focus {
-            border-color: #5856d6;
-            box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.3);
-            background: #2c3e50;
-        }
-
-        .form-group input::placeholder {
-            color: #6e6e73;
-        }
-
-        .dark-mode .form-group input::placeholder {
-            color: #a3bffa;
-        }
-
-        .category-filter {
-            margin-bottom: 24px;
         }
 
         .category-filter select {
             width: 100%;
-            padding: 12px 16px;
-            background: #f5f5f7;
-            border: 1px solid #d2d2d7;
-            border-radius: 12px;
+            padding: 1rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
             font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        .light-mode .category-filter select {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
             color: #1d1d1f;
         }
 
-        .dark-mode .category-filter select {
-            background: #2c3e50;
-            border-color: #4a5568;
-            color: #e8ecef;
+        .btn {
+            background: transparent;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            padding: 0.9rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .light-mode .btn {
+            color: #0071e3;
+            border-color: #0071e3;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .light-mode .btn::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.3), transparent);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .light-mode .btn:hover {
+            background: rgba(0, 113, 227, 0.2);
+            box-shadow: 0 0 20px rgba(0, 113, 227, 0.5);
+        }
+
+        .btn-danger {
+            border-color: #ff2d55;
+            color: #ff2d55;
+        }
+
+        .light-mode .btn-danger {
+            border-color: #ff2d55;
+            color: #ff2d55;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 45, 85, 0.2);
+            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
+        }
+
+        .btn-edit {
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+
+        .light-mode .btn-edit {
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+
+        .btn-edit:hover {
+            background: rgba(255, 149, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        .light-mode .form-group label {
+            color: #1d1d1f;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        .light-mode .form-group input,
+        .light-mode .form-group select {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
+            color: #1d1d1f;
         }
 
         .applications-grid {
             display: grid;
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
         }
 
         .app-card {
-            background: linear-gradient(135deg, #e6f0fa 0%, #f5f5f7 100%);
-            border: 1px solid #d2d2d7;
-            border-radius: 18px;
-            padding: 28px;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, background 0.4s ease;
-            animation: bounceIn 0.8s ease-out forwards;
-            animation-delay: calc(0.1s * var(--i));
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
-        .dark-mode .app-card {
-            background: linear-gradient(135deg, #2c3e50 0%, #1c2526 100%);
-            border-color: #4a5568;
-        }
-
-        .app-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top left, rgba(0, 113, 227, 0.1) 0%, transparent 50%);
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .dark-mode .app-card::before {
-            background: radial-gradient(circle at top left, rgba(88, 86, 214, 0.2) 0%, transparent 50%);
+        .light-mode .app-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
         }
 
         .app-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(135deg, #d0e4ff 0%, #e6f0fa 100%);
+            transform: translateY(-6px) rotate(0.5deg);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
-        .dark-mode .app-card:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(135deg, #4a5568 0%, #2c3e50 100%);
-        }
-
-        .app-card:hover::before {
-            opacity: 0.8;
+        .light-mode .app-card:hover {
+            box-shadow: 0 0 30px rgba(0, 113, 227, 0.3);
         }
 
         .app-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 14px;
+            align-items: center;
+            margin-bottom: 1rem;
         }
 
         .app-name {
-            font-weight: 700;
-            color: #1d1d1f;
-            font-size: 1.3rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            text-transform: uppercase;
         }
 
-        .dark-mode .app-name {
-            color: #e8ecef;
+        .light-mode .app-name {
+            color: #1d1d1f;
         }
 
         .app-category {
-            background: #0071e3;
-            color: #ffffff;
-            padding: 8px 18px;
-            border-radius: 12px;
+            background: transparent;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
             font-size: 0.9rem;
-            font-weight: 500;
-            white-space: nowrap;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .dark-mode .app-category {
-            background: #5856d6;
+        .light-mode .app-category {
+            color: #0071e3;
+            border-color: #0071e3;
         }
 
         .app-publisher {
+            color: #a0a0a0;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .app-publisher {
             color: #6e6e73;
-            font-size: 1rem;
-            margin-bottom: 18px;
-        }
-
-        .dark-mode .app-publisher {
-            color: #a3bffa;
-        }
-
-        .app-details {
-            margin-bottom: 18px;
-        }
-
-        .app-details ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .app-details li {
-            margin-bottom: 8px;
-            font-size: 1rem;
-            color: #1d1d1f;
-        }
-
-        .dark-mode .app-details li {
-            color: #e8ecef;
         }
 
         .app-actions {
-            margin-top: 22px;
             display: flex;
-            gap: 14px;
+            gap: 1rem;
             flex-wrap: wrap;
-        }
-
-        .btn-small {
-            padding: 10px 18px;
-            font-size: 0.95rem;
-            border-radius: 10px;
-            font-weight: 500;
         }
 
         .modal {
@@ -575,230 +482,158 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .dark-mode .modal {
-            background-color: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .modal-content {
-            background: #ffffff;
-            margin: 5% auto;
-            padding: 32px;
-            border-radius: 18px;
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(12px);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 1rem;
             width: 90%;
-            max-width: 520px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            animation: scaleIn 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            max-width: 600px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
-        .dark-mode .modal-content {
-            background: #2c3e50;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        .light-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
         }
 
         .modal-content h2 {
-            color: #1d1d1f;
-            margin-bottom: 24px;
-            font-size: 1.5rem;
-            font-weight: 600;
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
         }
 
-        .dark-mode .modal-content h2 {
-            color: #e8ecef;
+        .light-mode .modal-content h2 {
+            color: #0071e3;
         }
 
         .close {
-            color: #6e6e73;
+            color: #a0a0a0;
             float: right;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 2rem;
             cursor: pointer;
-            line-height: 1;
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
-        .dark-mode .close {
-            color: #a3bffa;
+        .light-mode .close {
+            color: #6e6e73;
         }
 
         .close:hover {
-            color: #1d1d1f;
+            color: #00ffff;
             transform: rotate(90deg);
         }
 
-        .dark-mode .close:hover {
-            color: #e8ecef;
+        .light-mode .close:hover {
+            color: #0071e3;
         }
 
         .chart-container {
-            margin-top: 32px;
-            padding: 24px;
-            background: #f5f5f7;
-            border-radius: 18px;
-            border: 1px solid #d2d2d7;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
-        .dark-mode .chart-container {
-            background: #2c3e50;
-            border-color: #4a5568;
+        .light-mode .chart-container {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.2);
         }
 
         .file-upload {
-            border: 2px dashed #0071e3;
-            border-radius: 12px;
-            padding: 32px;
+            border: 2px dashed #00ffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
             text-align: center;
-            margin: 24px 0;
-            transition: all 0.3s ease;
-            background: #f5f5f7;
+            margin: 1.5rem 0;
         }
 
-        .dark-mode .file-upload {
-            border-color: #5856d6;
-            background: #2c3e50;
-        }
-
-        .file-upload:hover {
-            background: #e6f0fa;
-            border-color: #005bb5;
-        }
-
-        .dark-mode .file-upload:hover {
-            background: #4a5568;
-            border-color: #4a48b5;
+        .light-mode .file-upload {
+            border-color: #0071e3;
         }
 
         .file-upload label {
             cursor: pointer;
-            color: #0071e3;
-            font-weight: 500;
+            color: #00ffff;
+            font-weight: 600;
             font-size: 1rem;
+            text-transform: uppercase;
         }
 
-        .dark-mode .file-upload label {
-            color: #5856d6;
+        .light-mode .file-upload label {
+            color: #0071e3;
         }
 
         .file-upload p {
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .light-mode .file-upload p {
             color: #6e6e73;
-            margin-top: 8px;
-            font-size: 0.9rem;
         }
 
-        .dark-mode .file-upload p {
-            color: #a3bffa;
-        }
-
-        .success-message, .error-message {
-            padding: 12px 16px;
-            border-radius: 10px;
-            margin: 16px 0;
+        .success-message,
+        .error-message {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
             display: none;
-            font-weight: 500;
-            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
         .success-message {
-            background: #e7f3e7;
-            color: #2e7d32;
-            border: 1px solid #a5d6a7;
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            border: 1px solid #00ffff;
         }
 
-        .dark-mode .success-message {
-            background: #2e7d32;
-            color: #e8ecef;
-            border-color: #4a7043;
+        .light-mode .success-message {
+            background: rgba(0, 113, 227, 0.2);
+            color: #0071e3;
+            border-color: #0071e3;
         }
 
         .error-message {
-            background: #fce4e4;
-            color: #d32f2f;
-            border: 1px solid #ef5350;
+            background: rgba(255, 45, 85, 0.2);
+            color: #ff2d55;
+            border: 1px solid #ff2d55;
         }
 
-        .dark-mode .error-message {
-            background: #d32f2f;
-            color: #e8ecef;
-            border-color: #e57373;
+        .light-mode .error-message {
+            background: rgba(255, 45, 85, 0.2);
+            color: #ff2d55;
+            border-color: #ff2d55;
         }
 
-        /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #f5f5f7;
-        }
-
-        .dark-mode ::-webkit-scrollbar-track {
             background: #1c2526;
         }
 
+        .light-mode ::-webkit-scrollbar-track {
+            background: #f5f5f7;
+        }
+
         ::-webkit-scrollbar-thumb {
-            background: #d2d2d7;
-            border-radius: 4px;
+            background: #00ffff;
+            border-radius: 6px;
         }
 
-        .dark-mode ::-webkit-scrollbar-thumb {
-            background: #4a5568;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a5a5aa;
-        }
-
-        .dark-mode ::-webkit-scrollbar-thumb:hover {
-            background: #718096;
-        }
-
-        /* Animations */
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .light-mode ::-webkit-scrollbar-thumb {
+            background: #0071e3;
         }
 
         @media (max-width: 768px) {
@@ -807,64 +642,39 @@
             }
 
             .stats-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            }
-
-            .header h1 {
-                font-size: 2rem;
+                grid-template-columns: 1fr;
             }
 
             .container {
-                padding: 16px;
+                padding: 1rem;
             }
 
-            .header, .content-panel, .sidebar {
-                padding: 24px;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .app-category {
-                align-self: flex-start;
-            }
-
-            .app-actions {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .theme-toggle {
-                top: 16px;
-                right: 1610px;
+            .header h1 {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="custom-cursor" id="customCursor"></div>
     <div class="container">
         <div class="header">
-            <h1>🛡️ Linux Application Signature Manager</h1>
-            <p>Enterprise-grade signature management for modern Linux environments</p>
+            <h1>🛡️ Linux Signature Matrix</h1>
+            <p>Next-generation security management for Linux ecosystems</p>
             <div class="theme-toggle" id="themeToggle">
                 <div class="knob"></div>
             </div>
         </div>
 
         <div class="stats-grid">
-            <div class="stat-card" style="--i: 1;">
+            <div class="stat-card">
                 <div class="stat-number" id="totalCategories">0</div>
                 <div class="stat-label">Security Categories</div>
             </div>
-            <div class="stat-card" style="--i: 2;">
+            <div class="stat-card">
                 <div class="stat-number" id="totalApplications">0</div>
                 <div class="stat-label">Protected Applications</div>
             </div>
-            <div class="stat-card" style="--i: 3;">
+            <div class="stat-card">
                 <div class="stat-number" id="recentlyAdded">0</div>
                 <div class="stat-label">Recently Secured</div>
             </div>
@@ -872,35 +682,24 @@
 
         <div class="main-content">
             <div class="content-panel">
-                <div class="section-title">
-                    🔐 Application Portfolio
-                </div>
-                
+                <div class="section-title">🔐 Application Matrix</div>
                 <div class="search-bar">
                     <input type="text" id="searchInput" placeholder="Search applications or publishers...">
                 </div>
-
                 <div class="category-filter">
                     <select id="categoryFilter">
                         <option value="">All Security Categories</option>
                     </select>
                 </div>
-
-                <div id="applicationsContainer" class="applications-grid">
-                    <!-- Applications will be loaded here -->
-                </div>
+                <div id="applicationsContainer" class="applications-grid"></div>
             </div>
 
             <div class="sidebar">
-                <div class="section-title">
-                    ⚡ Security Operations
-                </div>
-                
-                <button class="btn" onclick="openModal('addAppModal')">➕ Secure Application</button>
-                <button class="btn" onclick="openModal('addCategoryModal')">📁 Create Category</button>
-                <button class="btn" onclick="openModal('uploadModal')">📤 Bulk Import</button>
-                <button class="btn" onclick="downloadData()">📥 Export Portfolio</button>
-
+                <div class="section-title">⚡ Control Center</div>
+                <button class="btn" onclick="openModal('addAppModal')">➕ Add Application</button>
+                <button class="btn" onclick="openModal('addCategoryModal')">📁 New Category</button>
+                <button class="btn" onclick="openModal('uploadModal')">📤 Import Data</button>
+                <button class="btn" onclick="downloadData()">📥 Export Matrix</button>
                 <div class="chart-container">
                     <canvas id="categoryChart" width="300" height="200"></canvas>
                 </div>
@@ -912,7 +711,7 @@
     <div id="addAppModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addAppModal')">×</span>
-            <h2>Secure New Application</h2>
+            <h2>Add New Application</h2>
             <div class="success-message" id="addAppSuccess"></div>
             <div class="error-message" id="addAppError"></div>
             <form id="addAppForm">
@@ -930,7 +729,7 @@
                     <label for="appPublisher">Publisher(s)/Vendor(s) (comma-separated):</label>
                     <input type="text" id="appPublisher" placeholder="Enter publisher names" required>
                 </div>
-                <button type="submit" class="btn">Add to Security Portfolio</button>
+                <button type="submit" class="btn">Add to Matrix</button>
             </form>
         </div>
     </div>
@@ -945,7 +744,7 @@
             <form id="addCategoryForm">
                 <div class="form-group">
                     <label for="categoryName">Category Name:</label>
-                    <input type="text" id="categoryName" placeholder="e.g., Web Browsers, Development Tools" required>
+                    <input type="text" id="categoryName" placeholder="e.g., Web Browsers, Dev Tools" required>
                 </div>
                 <button type="submit" class="btn">Create Category</button>
             </form>
@@ -956,15 +755,15 @@
     <div id="uploadModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('uploadModal')">×</span>
-            <h2>Bulk Security Import</h2>
+            <h2>Bulk Data Import</h2>
             <div class="success-message" id="uploadSuccess"></div>
             <div class="error-message" id="uploadError"></div>
             <div class="file-upload">
                 <input type="file" id="fileInput" accept=".json">
-                <label for="fileInput">📁 Select Security Configuration File</label>
+                <label for="fileInput">📁 Select Data File</label>
                 <p>Upload a JSON file with application signatures</p>
             </div>
-            <button class="btn" onclick="uploadFile()">Import Security Data</button>
+            <button class="btn" onclick="uploadFile()">Import Data</button>
         </div>
     </div>
 
@@ -1006,39 +805,28 @@
     <script>
         const API_BASE = '/api';
         let currentData = {};
-        let categoryChart = null;
 
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
-        // Load saved theme
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
             themeToggle.classList.add('active');
         }
 
         themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
             themeToggle.classList.toggle('active');
-            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
             updateChartColors();
         });
 
-        // Custom Cursor
-        const cursor = document.getElementById('customCursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
-        });
-
-        document.addEventListener('mouseover', (e) => {
-            if (e.target.matches('button, a, select, input, .close, .file-upload, .theme-toggle')) {
-                cursor.classList.add('interactive');
-            } else {
-                cursor.classList.remove('interactive');
-            }
-        });
+        // GSAP Animations
+        gsap.from('.header', { duration: 1.2, y: -100, opacity: 0, ease: 'power4.out' });
+        gsap.from('.stat-card', { duration: 1, scale: 0.8, opacity: 0, stagger: 0.2, ease: 'back.out(2)' });
+        gsap.from('.content-panel', { duration: 1.2, x: -100, opacity: 0, ease: 'power4.out', delay: 0.4 });
+        gsap.from('.sidebar', { duration: 1.2, x: 100, opacity: 0, ease: 'power4.out', delay: 0.4 });
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
@@ -1095,9 +883,7 @@
             try {
                 const url = category ? `${API_BASE}/applications?category=${encodeURIComponent(category)}` : `${API_BASE}/applications`;
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Failed to load applications');
-                }
+                if (!response.ok) throw new Error('Failed to load applications');
                 const data = await response.json();
                 
                 currentData = data;
@@ -1111,8 +897,7 @@
         // Search applications
         async function searchApplications(query) {
             try {
-                const url = `${API_BASE}/search?q=${encodeURIComponent(query)}`;
-                const response = await fetch(url);
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
                 if (response.ok) {
                     const data = await response.json();
                     currentData = data;
@@ -1142,7 +927,6 @@
                 category.applications.forEach((app, appIndex) => {
                     const appCard = document.createElement('div');
                     appCard.className = 'app-card';
-                    appCard.style.setProperty('--i', index + appIndex);
                     
                     const names = app.app_name.join(', ');
                     const publishers = app.publisher.join(', ');
@@ -1152,68 +936,45 @@
                             <div class="app-name">${names}</div>
                             <div class="app-category">${category.category}</div>
                         </div>
-                        <div class="app-details">
-                            <ul>
-                                ${app.app_name.map((name, i) => `<li>Name: ${name} (Publisher: ${app.publisher[i] || 'Unknown'})</li>`).join('')}
-                            </ul>
-                        </div>
+                        <div class="app-publisher">${publishers}</div>
                         <div class="app-actions">
-                            <button class="btn btn-small btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}', '${app.publisher[0] || ''}')">
+                            <button class="btn btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}', '${app.publisher[0] || ''}')">
                                 🗑️ Remove
                             </button>
-                            <button class="btn btn-small btn-edit" onclick="openEditModal('${category.category}', '${app.app_name.join(',')}', '${app.publisher.join(',')}')">
+                            <button class="btn btn-edit" onclick="openEditModal('${category.category}', '${app.app_name.join(',')}', '${app.publisher.join(',')}')">
                                 ✏️ Edit
                             </button>
-                            <button class="btn btn-small" onclick="downloadByCategory('${category.category}')">
-                                📥 Export Category
+                            <button class="btn" onclick="downloadByCategory('${category.category}')">
+                                📥 Export
                             </button>
                         </div>
                     `;
                     
                     container.appendChild(appCard);
+                    gsap.from(appCard, { duration: 1, y: 50, opacity: 0, ease: 'power4.out', delay: (index + appIndex) * 0.1 });
                 });
             });
         }
 
         // Update chart
+        let categoryChart = null;
         function updateChart(categoryCounts) {
             const ctx = document.getElementById('categoryChart').getContext('2d');
+            if (categoryChart) categoryChart.destroy();
             
-            if (categoryChart) {
-                categoryChart.destroy();
-            }
-            
-            const labels = Object.keys(categoryCounts);
-            const data = Object.values(categoryCounts);
-            const isDarkMode = body.classList.contains('dark-mode');
-            
+            const isLightMode = body.classList.contains('light-mode');
             categoryChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: labels,
+                    labels: Object.keys(categoryCounts),
                     datasets: [{
-                        data: data,
-                        backgroundColor: isDarkMode ? [
-                            '#5856d6',
-                            '#2d9cdb',
-                            '#f7b731',
-                            '#ff6b81',
-                            '#00c7be',
-                            '#ff9f43',
-                            '#eb3b5a',
-                            '#a3bffa'
+                        data: Object.values(categoryCounts),
+                        backgroundColor: isLightMode ? [
+                            '#0071e3', '#2e7d32', '#ff9500', '#ff2d55', '#5856d6'
                         ] : [
-                            '#0071e3',
-                            '#2e7d32',
-                            '#ff9500',
-                            '#ff2d55',
-                            '#5856d6',
-                            '#00c7be',
-                            '#ff3b30',
-                            '#8e8e93'
+                            '#00ffff', '#ff2d55', '#ff9500', '#2e7d32', '#5856d6'
                         ],
-                        borderWidth: 0,
-                        borderColor: 'transparent'
+                        borderWidth: 0
                     }]
                 },
                 options: {
@@ -1223,44 +984,29 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                padding: 20,
-                                usePointStyle: true,
-                                color: isDarkMode ? '#e8ecef' : '#1d1d1f',
-                                font: {
-                                    size: 12,
-                                    family: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Roboto, sans-serif'
-                                }
+                                color: isLightMode ? '#1d1d1f' : '#e0e0e0',
+                                font: { size: 12, weight: '600' }
                             }
                         }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutElastic'
                     }
                 }
             });
+            gsap.from('#categoryChart', { duration: 1.5, scale: 0.8, opacity: 0, ease: 'power4.out', delay: 0.6 });
         }
 
-        // Update chart colors when theme changes
         function updateChartColors() {
             if (categoryChart) {
-                const isDarkMode = body.classList.contains('dark-mode');
-                categoryChart.data.datasets[0].backgroundColor = isDarkMode ? [
-                    '#5856d6',
-                    '#2d9cdb',
-                    '#f7b731',
-                    '#ff6b81',
-                    '#00c7be',
-                    '#ff9f43',
-                    '#eb3b5a',
-                    '#a3bffa'
+                const isLightMode = body.classList.contains('light-mode');
+                categoryChart.data.datasets[0].backgroundColor = isLightMode ? [
+                    '#0071e3', '#2e7d32', '#ff9500', '#ff2d55', '#5856d6'
                 ] : [
-                    '#0071e3',
-                    '#2e7d32',
-                    '#ff9500',
-                    '#ff2d55',
-                    '#5856d6',
-                    '#00c7be',
-                    '#ff3b30',
-                    '#8e8e93'
+                    '#00ffff', '#ff2d55', '#ff9500', '#2e7d32', '#5856d6'
                 ];
-                categoryChart.options.plugins.legend.labels.color = isDarkMode ? '#e8ecef' : '#1d1d1f';
+                categoryChart.options.plugins.legend.labels.color = isLightMode ? '#1d1d1f' : '#e0e0e0';
                 categoryChart.update();
             }
         }
@@ -1273,16 +1019,12 @@
 
         document.getElementById('searchInput').addEventListener('input', function() {
             const query = this.value.trim();
-            if (query) {
-                searchApplications(query);
-            } else {
-                loadApplications(document.getElementById('categoryFilter').value);
-            }
+            if (query) searchApplications(query);
+            else loadApplications(document.getElementById('categoryFilter').value);
         });
 
         document.getElementById('addAppForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const appNames = document.getElementById('appName').value.split(',').map(s => s.trim()).filter(s => s);
             const publishers = document.getElementById('appPublisher').value.split(',').map(s => s.trim()).filter(s => s);
             
@@ -1300,21 +1042,19 @@
             try {
                 const response = await fetch(`${API_BASE}/applications`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(appData)
                 });
                 
                 if (response.ok) {
                     showMessage('addAppSuccess', 'Application secured successfully!');
+                    gsap.to('#addAppSuccess', { duration: 0.5, y: 0, opacity: 1 });
                     document.getElementById('addAppForm').reset();
                     loadStats();
                     loadApplications();
                     setTimeout(() => closeModal('addAppModal'), 2000);
                 } else {
-                    const error = await response.text();
-                    showMessage('addAppError', error);
+                    showMessage('addAppError', await response.text());
                 }
             } catch (error) {
                 showMessage('addAppError', 'Error securing application: ' + error.message);
@@ -1323,29 +1063,24 @@
 
         document.getElementById('addCategoryForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const categoryData = {
-                category: document.getElementById('categoryName').value
-            };
+            const categoryData = { category: document.getElementById('categoryName').value };
             
             try {
                 const response = await fetch(`${API_BASE}/categories`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(categoryData)
                 });
                 
                 if (response.ok) {
                     showMessage('addCategorySuccess', 'Security category created successfully!');
+                    gsap.to('#addCategorySuccess', { duration: 0.5, y: 0, opacity: 1 });
                     document.getElementById('addCategoryForm').reset();
                     loadStats();
                     loadCategories();
                     setTimeout(() => closeModal('addCategoryModal'), 2000);
                 } else {
-                    const error = await response.text();
-                    showMessage('addCategoryError', error);
+                    showMessage('addCategoryError', await response.text());
                 }
             } catch (error) {
                 showMessage('addCategoryError', 'Error creating category: ' + error.message);
@@ -1354,7 +1089,6 @@
 
         document.getElementById('editAppForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const newAppNames = document.getElementById('editNewAppName').value.split(',').map(s => s.trim()).filter(s => s);
             const newPublishers = document.getElementById('editNewPublisher').value.split(',').map(s => s.trim()).filter(s => s);
             
@@ -1374,39 +1108,49 @@
             try {
                 const response = await fetch(`${API_BASE}/update/application`, {
                     method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(editData)
                 });
                 
                 if (response.ok) {
                     showMessage('editAppSuccess', 'Application signature updated successfully!');
+                    gsap.to('#editAppSuccess', { duration: 0.5, y: 0, opacity: 1 });
                     document.getElementById('editAppForm').reset();
                     loadStats();
                     loadApplications();
                     setTimeout(() => closeModal('editAppModal'), 2000);
                 } else {
-                    const error = await response.text();
-                    showMessage('editAppError', error);
+                    showMessage('editAppError', await response.text());
                 }
             } catch (error) {
                 showMessage('editAppError', 'Error updating application: ' + error.message);
             }
         });
 
-        // Modal functions
         function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+            gsap.fromTo(modal.querySelector('.modal-content'), 
+                { scale: 0.7, opacity: 0, y: 100 },
+                { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: 'power4.out' }
+            );
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
             const modal = document.getElementById(modalId);
-            const messages = modal.querySelectorAll('.success-message, .error-message');
-            messages.forEach(msg => {
-                msg.style.display = 'none';
-                msg.textContent = '';
+            gsap.to(modal.querySelector('.modal-content'), {
+                scale: 0.7,
+                opacity: 0,
+                y: 100,
+                duration: 0.4,
+                ease: 'power4.in',
+                onComplete: () => {
+                    modal.style.display = 'none';
+                    modal.querySelectorAll('.success-message, .error-message').forEach(msg => {
+                        msg.style.display = 'none';
+                        msg.textContent = '';
+                    });
+                }
             });
         }
 
@@ -1423,17 +1167,15 @@
             const element = document.getElementById(elementId);
             element.textContent = message;
             element.style.display = 'block';
-            element.style.animation = 'fadeIn 0.3s ease-out';
+            gsap.fromTo(element, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power4.out' });
         }
 
-        // Close modal when clicking outside
         window.addEventListener('click', function(event) {
             if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+                closeModal(event.target.id);
             }
         });
 
-        // Download functions
         async function downloadData() {
             try {
                 const response = await fetch(`${API_BASE}/download`);
@@ -1468,7 +1210,6 @@
             }
         }
 
-        // Upload function
         async function uploadFile() {
             const fileInput = document.getElementById('fileInput');
             const file = fileInput.files[0];
@@ -1495,32 +1236,25 @@
                     loadApplications();
                     setTimeout(() => closeModal('uploadModal'), 3000);
                 } else {
-                    const error = await response.text();
-                    showMessage('uploadError', error);
+                    showMessage('uploadError', await response.text());
                 }
             } catch (error) {
                 showMessage('uploadError', 'Error uploading file: ' + error.message);
             }
         }
 
-        // Delete application
         async function deleteApplication(category, appName, publisher) {
-            if (!confirm(`Are you sure you want to remove "${appName}" (${publisher || 'Unknown'}) from the "${category}" category?`)) {
-                return;
-            }
+            if (!confirm(`Are you sure you want to remove "${appName}" (${publisher || 'Unknown'}) from the "${category}" category?`)) return;
             
             try {
                 const url = `${API_BASE}/delete/application?category=${encodeURIComponent(category)}&app_name=${encodeURIComponent(appName)}&publisher=${encodeURIComponent(publisher)}`;
-                const response = await fetch(url, {
-                    method: 'DELETE'
-                });
+                const response = await fetch(url, { method: 'DELETE' });
                 
                 if (response.ok) {
                     loadStats();
                     loadApplications(document.getElementById('categoryFilter').value);
                 } else {
-                    const error = await response.text();
-                    alert('Error removing application: ' + error);
+                    alert('Error removing application: ' + await response.text());
                 }
             } catch (error) {
                 alert('Error removing application: ' + error.message);
