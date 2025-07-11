@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linux Application Signature Management</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+=======
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
     <style>
         * {
             margin: 0;
@@ -14,6 +18,7 @@
         }
 
         body {
+<<<<<<< HEAD
             font-family: 'Roboto', Arial, sans-serif;
             background: #FFFFFF;
             min-height: 100vh;
@@ -49,10 +54,105 @@
             font-size: 1.125rem;
             color: #555555;
             font-weight: 400;
+=======
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            line-height: 1.6;
+            cursor: auto;
+            overflow-x: hidden;
+        }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+            color: #1d1d1f;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00ffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .light-mode .header h1 {
+            color: #0071e3;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            color: #a0a0a0;
+        }
+
+        .light-mode .header p {
+            color: #6e6e73;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 3rem;
+            height: 1.8rem;
+            background: #1c2526;
+            border-radius: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.2rem;
+            border: 1px solid #00ffff;
+        }
+
+        .light-mode .theme-toggle {
+            background: #d2d2d7;
+            border-color: #0071e3;
+        }
+
+        .theme-toggle .knob {
+            width: 1.6rem;
+            height: 1.6rem;
+            background: #00ffff;
+            border-radius: 50%;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .light-mode .theme-toggle .knob {
+            background: #ffffff;
+        }
+
+        .theme-toggle.active .knob {
+            transform: translateX(1.2rem);
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stats-grid {
             display: grid;
+<<<<<<< HEAD
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
@@ -74,11 +174,33 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0, 91, 172, 0.2);
             border-color: #005BAC;
+=======
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stat-card::before {
             content: '';
             position: absolute;
+<<<<<<< HEAD
             top: 0;
             left: 0;
             width: 100%;
@@ -86,6 +208,19 @@
             background: linear-gradient(90deg, #005BAC, #0077B6);
             opacity: 0;
             transition: opacity 0.3s ease;
+=======
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .light-mode .stat-card::before {
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.3) 0%, transparent 70%);
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stat-card:hover::before {
@@ -93,6 +228,7 @@
         }
 
         .stat-number {
+<<<<<<< HEAD
             font-size: 2.5rem;
             font-weight: 700;
             color: #005BAC;
@@ -158,6 +294,154 @@
             background: #004080;
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 91, 172, 0.3);
+=======
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #00ffff;
+        }
+
+        .light-mode .stat-number {
+            color: #0071e3;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .light-mode .stat-label {
+            color: #6e6e73;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        .content-panel {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .content-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .sidebar {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .light-mode .section-title {
+            color: #0071e3;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .light-mode .search-bar input {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
+            color: #1d1d1f;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .search-bar input:focus {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+        }
+
+        .search-bar::before {
+            content: '🔍';
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0a0a0;
+        }
+
+        .light-mode .search-bar::before {
+            color: #6e6e73;
+        }
+
+        .category-filter select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        .light-mode .category-filter select {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
+            color: #1d1d1f;
+        }
+
+        .btn {
+            background: transparent;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            padding: 0.9rem 1.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .light-mode .btn {
+            color: #0071e3;
+            border-color: #0071e3;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .btn::before {
@@ -167,14 +451,24 @@
             left: -100%;
             width: 100%;
             height: 100%;
+<<<<<<< HEAD
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.4s ease;
+=======
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .light-mode .btn::before {
+            background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.3), transparent);
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .btn:hover::before {
             left: 100%;
         }
 
+<<<<<<< HEAD
         .btn-danger {
             background: #D32F2F;
         }
@@ -186,18 +480,76 @@
 
         .form-group {
             margin-bottom: 20px;
+=======
+        .btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .light-mode .btn:hover {
+            background: rgba(0, 113, 227, 0.2);
+            box-shadow: 0 0 20px rgba(0, 113, 227, 0.5);
+        }
+
+        .btn-danger {
+            border-color: #ff2d55;
+            color: #ff2d55;
+        }
+
+        .light-mode .btn-danger {
+            border-color: #ff2d55;
+            color: #ff2d55;
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 45, 85, 0.2);
+            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
+        }
+
+        .btn-edit {
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+
+        .light-mode .btn-edit {
+            border-color: #ff9500;
+            color: #ff9500;
+        }
+
+        .btn-edit:hover {
+            background: rgba(255, 149, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 149, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .form-group label {
             display: block;
+<<<<<<< HEAD
             margin-bottom: 6px;
             font-weight: 500;
             color: #333333;
             font-size: 1rem;
+=======
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            text-transform: uppercase;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
-        .form-group input, .form-group select {
+        .light-mode .form-group label {
+            color: #1d1d1f;
+        }
+
+        .form-group input,
+        .form-group select {
             width: 100%;
+<<<<<<< HEAD
             padding: 12px 16px;
             background: #F5F5F5;
             border: 1px solid #E0E0E0;
@@ -220,10 +572,26 @@
 
         .category-filter {
             margin-bottom: Helvetica
+=======
+            padding: 1rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: #e0e0e0;
+        }
+
+        .light-mode .form-group input,
+        .light-mode .form-group select {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.3);
+            color: #1d1d1f;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .applications-grid {
             display: grid;
+<<<<<<< HEAD
             gap: 16px;
         }
 
@@ -260,10 +628,41 @@
             opacity: 1;
         }
 
+=======
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .app-card {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .app-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .app-card:hover {
+            transform: translateY(-6px) rotate(0.5deg);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .light-mode .app-card:hover {
+            box-shadow: 0 0 30px rgba(0, 113, 227, 0.3);
+        }
+
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+<<<<<<< HEAD
             margin-bottom: 10px;
         }
 
@@ -299,6 +698,52 @@
             padding: 8px 14px;
             font-size: 0.875rem;
             border-radius: 8px;
+=======
+            margin-bottom: 1rem;
+        }
+
+        .app-name {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        .light-mode .app-name {
+            color: #1d1d1f;
+        }
+
+        .app-category {
+            background: transparent;
+            color: #00ffff;
+            border: 1px solid #00ffff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .light-mode .app-category {
+            color: #0071e3;
+            border-color: #0071e3;
+        }
+
+        .app-publisher {
+            color: #a0a0a0;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .light-mode .app-publisher {
+            color: #6e6e73;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .modal {
@@ -309,6 +754,7 @@
             top: 0;
             width: 100%;
             height: 100%;
+<<<<<<< HEAD
             background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease;
         }
@@ -371,10 +817,88 @@
 
         .file-upload input[type="file"] {
             display: none;
+=======
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(12px);
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .modal-content h2 {
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .light-mode .modal-content h2 {
+            color: #0071e3;
+        }
+
+        .close {
+            color: #a0a0a0;
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .light-mode .close {
+            color: #6e6e73;
+        }
+
+        .close:hover {
+            color: #00ffff;
+            transform: rotate(90deg);
+        }
+
+        .light-mode .close:hover {
+            color: #0071e3;
+        }
+
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(40, 40, 40, 0.9);
+            border-radius: 0.75rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .light-mode .chart-container {
+            background: rgba(245, 245, 247, 0.9);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .file-upload {
+            border: 2px dashed #00ffff;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .light-mode .file-upload {
+            border-color: #0071e3;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .file-upload label {
             cursor: pointer;
+<<<<<<< HEAD
             color: #005BAC;
             font-weight: 500;
             font-size: 1rem;
@@ -410,10 +934,64 @@
             background: #FFEBEE;
             color: #D32F2F;
             border: 1px solid #D32F2F;
+=======
+            color: #00ffff;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
         }
 
-        /* Scrollbar Styling */
+        .light-mode .file-upload label {
+            color: #0071e3;
+        }
+
+        .file-upload p {
+            color: #a0a0a0;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .light-mode .file-upload p {
+            color: #6e6e73;
+        }
+
+        .success-message,
+        .error-message {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            display: none;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            border: 1px solid #00ffff;
+        }
+
+        .light-mode .success-message {
+            background: rgba(0, 113, 227, 0.2);
+            color: #0071e3;
+            border-color: #0071e3;
+        }
+
+        .error-message {
+            background: rgba(255, 45, 85, 0.2);
+            color: #ff2d55;
+            border: 1px solid #ff2d55;
+        }
+
+        .light-mode .error-message {
+            background: rgba(255, 45, 85, 0.2);
+            color: #ff2d55;
+            border-color: #ff2d55;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
+        }
+
         ::-webkit-scrollbar {
+<<<<<<< HEAD
             width: 6px;
         }
 
@@ -459,12 +1037,33 @@
         @keyframes scaleIn {
             from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+=======
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1c2526;
+        }
+
+        .light-mode ::-webkit-scrollbar-track {
+            background: #f5f5f7;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 6px;
+        }
+
+        .light-mode ::-webkit-scrollbar-thumb {
+            background: #0071e3;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
             }
+<<<<<<< HEAD
             
             .stats-grid {
                 grid-template-columns: 1fr;
@@ -472,12 +1071,18 @@
 
             .header h1 {
                 font-size: 1.75rem;
+=======
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             }
 
             .container {
-                padding: 16px;
+                padding: 1rem;
             }
 
+<<<<<<< HEAD
             .header, .content-panel, .sidebar {
                 padding: 16px;
             }
@@ -490,6 +1095,10 @@
 
             .app-category {
                 align-self: flex-start;
+=======
+            .header h1 {
+                font-size: 2.5rem;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             }
         }
     </style>
@@ -497,8 +1106,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛡️ Linux Application Signature Manager</h1>
-            <p>Enterprise-grade signature management for modern Linux environments</p>
+            <h1>🛡️ Linux Signature Matrix</h1>
+            <p>Next-generation security management for Linux ecosystems</p>
+            <div class="theme-toggle" id="themeToggle">
+                <div class="knob"></div>
+            </div>
         </div>
 
         <div class="stats-grid">
@@ -533,20 +1145,31 @@
             </div>
 
             <div class="content-panel">
-                <div class="section-title">
-                    🔐 Application Portfolio
+                <div class="section-title">🔐 Application Matrix</div>
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search applications or publishers...">
                 </div>
-                
                 <div class="category-filter">
                     <select id="categoryFilter">
                         <option value="">All Security Categories</option>
                     </select>
                 </div>
+                <div id="applicationsContainer" class="applications-grid"></div>
+            </div>
+<<<<<<< HEAD
+=======
 
-                <div id="applicationsContainer" class="applications-grid">
-                    <!-- Applications will be loaded here -->
+            <div class="sidebar">
+                <div class="section-title">⚡ Control Center</div>
+                <button class="btn" onclick="openModal('addAppModal')">➕ Add Application</button>
+                <button class="btn" onclick="openModal('addCategoryModal')">📁 New Category</button>
+                <button class="btn" onclick="openModal('uploadModal')">📤 Import Data</button>
+                <button class="btn" onclick="downloadData()">📥 Export Matrix</button>
+                <div class="chart-container">
+                    <canvas id="categoryChart" width="300" height="200"></canvas>
                 </div>
             </div>
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         </div>
     </div>
 
@@ -554,7 +1177,11 @@
     <div id="addAppModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addAppModal')">×</span>
+<<<<<<< HEAD
             <h2>Secure New Application</h2>
+=======
+            <h2>Add New Application</h2>
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             <div class="success-message" id="addAppSuccess"></div>
             <div class="error-message" id="addAppError"></div>
             <form id="addAppForm">
@@ -565,14 +1192,14 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="appName">Application Name:</label>
-                    <input type="text" id="appName" placeholder="Enter application name" required>
+                    <label for="appName">Application Name(s) (comma-separated):</label>
+                    <input type="text" id="appName" placeholder="Enter application names" required>
                 </div>
                 <div class="form-group">
-                    <label for="appPublisher">Publisher/Vendor:</label>
-                    <input type="text" id="appPublisher" placeholder="Enter publisher name" required>
+                    <label for="appPublisher">Publisher(s)/Vendor(s) (comma-separated):</label>
+                    <input type="text" id="appPublisher" placeholder="Enter publisher names" required>
                 </div>
-                <button type="submit" class="btn">Add to Security Portfolio</button>
+                <button type="submit" class="btn">Add to Matrix</button>
             </form>
         </div>
     </div>
@@ -587,7 +1214,7 @@
             <form id="addCategoryForm">
                 <div class="form-group">
                     <label for="categoryName">Category Name:</label>
-                    <input type="text" id="categoryName" placeholder="e.g., Web Browsers, Development Tools" required>
+                    <input type="text" id="categoryName" placeholder="e.g., Web Browsers, Dev Tools" required>
                 </div>
                 <button type="submit" class="btn">Create Category</button>
             </form>
@@ -598,22 +1225,82 @@
     <div id="uploadModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('uploadModal')">×</span>
+<<<<<<< HEAD
             <h2>Bulk Security Import</h2>
+=======
+            <h2>Bulk Data Import</h2>
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             <div class="success-message" id="uploadSuccess"></div>
             <div class="error-message" id="uploadError"></div>
             <div class="file-upload">
                 <input type="file" id="fileInput" accept=".json">
-                <label for="fileInput">📁 Select Security Configuration File</label>
+                <label for="fileInput">📁 Select Data File</label>
                 <p>Upload a JSON file with application signatures</p>
             </div>
-            <button class="btn" onclick="uploadFile()">Import Security Data</button>
+            <button class="btn" onclick="uploadFile()">Import Data</button>
+        </div>
+    </div>
+
+    <!-- Edit Application Modal -->
+    <div id="editAppModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editAppModal')">×</span>
+            <h2>Edit Application Signature</h2>
+            <div class="success-message" id="editAppSuccess"></div>
+            <div class="error-message" id="editAppError"></div>
+            <form id="editAppForm">
+                <div class="form-group">
+                    <label for="editAppCategory">Security Category:</label>
+                    <select id="editAppCategory" required>
+                        <option value="">Select Security Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editOldAppName">Current Application Name:</label>
+                    <input type="text" id="editOldAppName" placeholder="Current application name" required readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editOldPublisher">Current Publisher/Vendor:</label>
+                    <input type="text" id="editOldPublisher" placeholder="Current publisher name" required readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editNewAppName">New Application Name(s) (comma-separated):</label>
+                    <input type="text" id="editNewAppName" placeholder="Enter new application names" required>
+                </div>
+                <div class="form-group">
+                    <label for="editNewPublisher">New Publisher(s)/Vendor(s) (comma-separated):</label>
+                    <input type="text" id="editNewPublisher" placeholder="Enter new publisher names" required>
+                </div>
+                <button type="submit" class="btn btn-edit">Update Signature</button>
+            </form>
         </div>
     </div>
 
     <script>
         const API_BASE = '/api';
         let currentData = {};
-        let categoryChart = null;
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.classList.add('active');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            themeToggle.classList.toggle('active');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+            updateChartColors();
+        });
+
+        // GSAP Animations
+        gsap.from('.header', { duration: 1.2, y: -100, opacity: 0, ease: 'power4.out' });
+        gsap.from('.stat-card', { duration: 1, scale: 0.8, opacity: 0, stagger: 0.2, ease: 'back.out(2)' });
+        gsap.from('.content-panel', { duration: 1.2, x: -100, opacity: 0, ease: 'power4.out', delay: 0.4 });
+        gsap.from('.sidebar', { duration: 1.2, x: 100, opacity: 0, ease: 'power4.out', delay: 0.4 });
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
@@ -646,15 +1333,19 @@
                 
                 const categoryFilter = document.getElementById('categoryFilter');
                 const appCategory = document.getElementById('appCategory');
+                const editAppCategory = document.getElementById('editAppCategory');
                 
                 categoryFilter.innerHTML = '<option value="">All Security Categories</option>';
                 appCategory.innerHTML = '<option value="">Select Security Category</option>';
+                editAppCategory.innerHTML = '<option value="">Select Security Category</option>';
                 
                 categories.forEach(category => {
                     const option1 = new Option(category, category);
                     const option2 = new Option(category, category);
+                    const option3 = new Option(category, category);
                     categoryFilter.add(option1);
                     appCategory.add(option2);
+                    editAppCategory.add(option3);
                 });
             } catch (error) {
                 console.error('Error loading categories:', error);
@@ -666,64 +1357,96 @@
             try {
                 const url = category ? `${API_BASE}/applications?category=${encodeURIComponent(category)}` : `${API_BASE}/applications`;
                 const response = await fetch(url);
+                if (!response.ok) throw new Error('Failed to load applications');
                 const data = await response.json();
                 
                 currentData = data;
                 displayApplications(data, category);
             } catch (error) {
                 console.error('Error loading applications:', error);
+                document.getElementById('applicationsContainer').innerHTML = '<p>Error loading applications</p>';
+            }
+        }
+
+        // Search applications
+        async function searchApplications(query) {
+            try {
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    currentData = data;
+                    displayApplications(data, '', true);
+                } else {
+                    document.getElementById('applicationsContainer').innerHTML = '<p>No applications found</p>';
+                }
+            } catch (error) {
+                console.error('Error searching applications:', error);
+                document.getElementById('applicationsContainer').innerHTML = '<p>Error searching applications</p>';
             }
         }
 
         // Display applications
-        function displayApplications(data, selectedCategory = '') {
+        function displayApplications(data, selectedCategory = '', isSearch = false) {
             const container = document.getElementById('applicationsContainer');
             container.innerHTML = '';
             
-            const categories = selectedCategory && data.category ? [data] : data.linuxCategories || [];
+            const categories = isSearch || !selectedCategory ? data.linuxCategories || [] : [data];
             
-            categories.forEach(category => {
-                category.applications.forEach(app => {
+            if (!categories || categories.length === 0) {
+                container.innerHTML = '<p>No applications found</p>';
+                return;
+            }
+
+            categories.forEach((category, index) => {
+                category.applications.forEach((app, appIndex) => {
                     const appCard = document.createElement('div');
                     appCard.className = 'app-card';
                     
+                    const names = app.app_name.join(', ');
+                    const publishers = app.publisher.join(', ');
+                    
                     appCard.innerHTML = `
                         <div class="app-header">
-                            <div class="app-name">${app.app_name.join(', ')}</div>
+                            <div class="app-name">${names}</div>
                             <div class="app-category">${category.category}</div>
                         </div>
-                        <div class="app-publisher">Publisher: ${app.publisher.join(', ')}</div>
+                        <div class="app-publisher">${publishers}</div>
                         <div class="app-actions">
-                            <button class="btn btn-small btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}')">
+                            <button class="btn btn-danger" onclick="deleteApplication('${category.category}', '${app.app_name[0]}', '${app.publisher[0] || ''}')">
                                 🗑️ Remove
                             </button>
-                            <button class="btn btn-small" onclick="downloadByCategory('${category.category}')">
-                                📥 Export Category
+                            <button class="btn btn-edit" onclick="openEditModal('${category.category}', '${app.app_name.join(',')}', '${app.publisher.join(',')}')">
+                                ✏️ Edit
+                            </button>
+                            <button class="btn" onclick="downloadByCategory('${category.category}')">
+                                📥 Export
                             </button>
                         </div>
                     `;
                     
                     container.appendChild(appCard);
+                    gsap.from(appCard, { duration: 1, y: 50, opacity: 0, ease: 'power4.out', delay: (index + appIndex) * 0.1 });
                 });
             });
         }
 
+<<<<<<< HEAD
         // Update chart with Samsung-inspired theme
+=======
+        // Update chart
+        let categoryChart = null;
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         function updateChart(categoryCounts) {
             const ctx = document.getElementById('categoryChart').getContext('2d');
+            if (categoryChart) categoryChart.destroy();
             
-            if (categoryChart) {
-                categoryChart.destroy();
-            }
-            
-            const labels = Object.keys(categoryCounts);
-            const data = Object.values(categoryCounts);
-            
+            const isLightMode = body.classList.contains('light-mode');
             categoryChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: labels,
+                    labels: Object.keys(categoryCounts),
                     datasets: [{
+<<<<<<< HEAD
                         data: data,
                         backgroundColor: [
                             '#005BAC',
@@ -737,6 +1460,15 @@
                         ],
                         borderWidth: 1,
                         borderColor: '#FFFFFF'
+=======
+                        data: Object.values(categoryCounts),
+                        backgroundColor: isLightMode ? [
+                            '#0071e3', '#2e7d32', '#ff9500', '#ff2d55', '#5856d6'
+                        ] : [
+                            '#00ffff', '#ff2d55', '#ff9500', '#2e7d32', '#5856d6'
+                        ],
+                        borderWidth: 0
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                     }]
                 },
                 options: {
@@ -746,6 +1478,7 @@
                         legend: {
                             position: 'bottom',
                             labels: {
+<<<<<<< HEAD
                                 padding: 15,
                                 usePointStyle: true,
                                 color: '#333333',
@@ -753,49 +1486,84 @@
                                     size: 12,
                                     family: 'Roboto, sans-serif'
                                 }
+=======
+                                color: isLightMode ? '#1d1d1f' : '#e0e0e0',
+                                font: { size: 12, weight: '600' }
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                             }
                         }
                     },
                     animation: {
+<<<<<<< HEAD
                         duration: 1200,
                         easing: 'easeOutQuart'
+=======
+                        duration: 2000,
+                        easing: 'easeOutElastic'
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                     }
                 }
             });
+            gsap.from('#categoryChart', { duration: 1.5, scale: 0.8, opacity: 0, ease: 'power4.out', delay: 0.6 });
+        }
+
+        function updateChartColors() {
+            if (categoryChart) {
+                const isLightMode = body.classList.contains('light-mode');
+                categoryChart.data.datasets[0].backgroundColor = isLightMode ? [
+                    '#0071e3', '#2e7d32', '#ff9500', '#ff2d55', '#5856d6'
+                ] : [
+                    '#00ffff', '#ff2d55', '#ff9500', '#2e7d32', '#5856d6'
+                ];
+                categoryChart.options.plugins.legend.labels.color = isLightMode ? '#1d1d1f' : '#e0e0e0';
+                categoryChart.update();
+            }
         }
 
         // Event listeners
         document.getElementById('categoryFilter').addEventListener('change', function() {
+            document.getElementById('searchInput').value = '';
             loadApplications(this.value);
+        });
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query) searchApplications(query);
+            else loadApplications(document.getElementById('categoryFilter').value);
         });
 
         document.getElementById('addAppForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const appNames = document.getElementById('appName').value.split(',').map(s => s.trim()).filter(s => s);
+            const publishers = document.getElementById('appPublisher').value.split(',').map(s => s.trim()).filter(s => s);
+            
+            if (appNames.length !== publishers.length) {
+                showMessage('addAppError', 'Number of application names must match number of publishers');
+                return;
+            }
             
             const appData = {
                 category: document.getElementById('appCategory').value,
-                app_name: [document.getElementById('appName').value],
-                publisher: [document.getElementById('appPublisher').value]
+                app_name: appNames,
+                publisher: publishers
             };
             
             try {
                 const response = await fetch(`${API_BASE}/applications`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(appData)
                 });
                 
                 if (response.ok) {
                     showMessage('addAppSuccess', 'Application secured successfully!');
+                    gsap.to('#addAppSuccess', { duration: 0.5, y: 0, opacity: 1 });
                     document.getElementById('addAppForm').reset();
                     loadStats();
                     loadApplications();
                     setTimeout(() => closeModal('addAppModal'), 2000);
                 } else {
-                    const error = await response.text();
-                    showMessage('addAppError', error);
+                    showMessage('addAppError', await response.text());
                 }
             } catch (error) {
                 showMessage('addAppError', 'Error securing application: ' + error.message);
@@ -804,64 +1572,123 @@
 
         document.getElementById('addCategoryForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            const categoryData = {
-                category: document.getElementById('categoryName').value
-            };
+            const categoryData = { category: document.getElementById('categoryName').value };
             
             try {
                 const response = await fetch(`${API_BASE}/categories`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(categoryData)
                 });
                 
                 if (response.ok) {
                     showMessage('addCategorySuccess', 'Security category created successfully!');
+                    gsap.to('#addCategorySuccess', { duration: 0.5, y: 0, opacity: 1 });
                     document.getElementById('addCategoryForm').reset();
                     loadStats();
                     loadCategories();
                     setTimeout(() => closeModal('addCategoryModal'), 2000);
                 } else {
-                    const error = await response.text();
-                    showMessage('addCategoryError', error);
+                    showMessage('addCategoryError', await response.text());
                 }
             } catch (error) {
                 showMessage('addCategoryError', 'Error creating category: ' + error.message);
             }
         });
 
-        // Modal functions
+        document.getElementById('editAppForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const newAppNames = document.getElementById('editNewAppName').value.split(',').map(s => s.trim()).filter(s => s);
+            const newPublishers = document.getElementById('editNewPublisher').value.split(',').map(s => s.trim()).filter(s => s);
+            
+            if (newAppNames.length !== newPublishers.length) {
+                showMessage('editAppError', 'Number of new application names must match number of new publishers');
+                return;
+            }
+            
+            const editData = {
+                category: document.getElementById('editAppCategory').value,
+                old_app_name: document.getElementById('editOldAppName').value,
+                old_publisher: document.getElementById('editOldPublisher').value,
+                new_app_name: newAppNames,
+                new_publisher: newPublishers
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/update/application`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(editData)
+                });
+                
+                if (response.ok) {
+                    showMessage('editAppSuccess', 'Application signature updated successfully!');
+                    gsap.to('#editAppSuccess', { duration: 0.5, y: 0, opacity: 1 });
+                    document.getElementById('editAppForm').reset();
+                    loadStats();
+                    loadApplications();
+                    setTimeout(() => closeModal('editAppModal'), 2000);
+                } else {
+                    showMessage('editAppError', await response.text());
+                }
+            } catch (error) {
+                showMessage('editAppError', 'Error updating application: ' + error.message);
+            }
+        });
+
         function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+            gsap.fromTo(modal.querySelector('.modal-content'), 
+                { scale: 0.7, opacity: 0, y: 100 },
+                { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: 'power4.out' }
+            );
         }
 
         function closeModal(modalId) {
+<<<<<<< HEAD
             document.getElementById(modalId).style.display = 'none';
+=======
+>>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             const modal = document.getElementById(modalId);
-            const messages = modal.querySelectorAll('.success-message, .error-message');
-            messages.forEach(msg => {
-                msg.style.display = 'none';
-                msg.textContent = '';
+            gsap.to(modal.querySelector('.modal-content'), {
+                scale: 0.7,
+                opacity: 0,
+                y: 100,
+                duration: 0.4,
+                ease: 'power4.in',
+                onComplete: () => {
+                    modal.style.display = 'none';
+                    modal.querySelectorAll('.success-message, .error-message').forEach(msg => {
+                        msg.style.display = 'none';
+                        msg.textContent = '';
+                    });
+                }
             });
+        }
+
+        function openEditModal(category, appNames, publishers) {
+            document.getElementById('editAppCategory').value = category;
+            document.getElementById('editOldAppName').value = appNames.split(',')[0];
+            document.getElementById('editOldPublisher').value = publishers.split(',')[0] || '';
+            document.getElementById('editNewAppName').value = appNames;
+            document.getElementById('editNewPublisher').value = publishers;
+            openModal('editAppModal');
         }
 
         function showMessage(elementId, message) {
             const element = document.getElementById(elementId);
             element.textContent = message;
             element.style.display = 'block';
+            gsap.fromTo(element, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power4.out' });
         }
 
-        // Close modal when clicking outside
         window.addEventListener('click', function(event) {
             if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+                closeModal(event.target.id);
             }
         });
 
-        // Download functions
         async function downloadData() {
             try {
                 const response = await fetch(`${API_BASE}/download`);
@@ -896,7 +1723,6 @@
             }
         }
 
-        // Upload function
         async function uploadFile() {
             const fileInput = document.getElementById('fileInput');
             const file = fileInput.files[0];
@@ -923,31 +1749,25 @@
                     loadApplications();
                     setTimeout(() => closeModal('uploadModal'), 3000);
                 } else {
-                    const error = await response.text();
-                    showMessage('uploadError', error);
+                    showMessage('uploadError', await response.text());
                 }
             } catch (error) {
                 showMessage('uploadError', 'Error uploading file: ' + error.message);
             }
         }
 
-        // Delete functions
-        async function deleteApplication(category, appName) {
-            if (!confirm(`Are you sure you want to remove "${appName}" from the "${category}" category?`)) {
-                return;
-            }
+        async function deleteApplication(category, appName, publisher) {
+            if (!confirm(`Are you sure you want to remove "${appName}" (${publisher || 'Unknown'}) from the "${category}" category?`)) return;
             
             try {
-                const response = await fetch(`${API_BASE}/delete/application?category=${encodeURIComponent(category)}&app_name=${encodeURIComponent(appName)}`, {
-                    method: 'DELETE'
-                });
+                const url = `${API_BASE}/delete/application?category=${encodeURIComponent(category)}&app_name=${encodeURIComponent(appName)}&publisher=${encodeURIComponent(publisher)}`;
+                const response = await fetch(url, { method: 'DELETE' });
                 
                 if (response.ok) {
                     loadStats();
                     loadApplications(document.getElementById('categoryFilter').value);
                 } else {
-                    const error = await response.text();
-                    alert('Error removing application: ' + error);
+                    alert('Error removing application: ' + await response.text());
                 }
             } catch (error) {
                 alert('Error removing application: ' + error.message);

@@ -6,439 +6,488 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
-	// "path/filepath"
-	// "strconv"
 	"strings"
-	// "time"
-
-	"github.com/gorilla/mux"
-	"github.com/rs/cors"
+	"sync"
+	"time"
 )
 
-// Data structures
+// Application represents an application with its name and publisher.
 type Application struct {
 	AppName   []string `json:"app_name"`
 	Publisher []string `json:"publisher"`
 }
 
+// Category represents a category with its applications.
 type Category struct {
 	Category     string        `json:"category"`
 	Applications []Application `json:"applications"`
 }
 
-type LinuxData struct {
-	LinuxCategories []Category `json:"linuxCategories"`
+// DataStore holds the application data and recent additions.
+type DataStore struct {
+	LinuxCategories []Category           `json:"linuxCategories"`
+	RecentApps      map[string]time.Time // Tracks recently added apps
+	mu              sync.RWMutex         // For thread-safe operations
 }
 
-type Stats struct {
-	TotalCategories   int            `json:"totalCategories"`
-	TotalApplications int            `json:"totalApplications"`
-	CategoryCounts    map[string]int `json:"categoryCounts"`
-	RecentlyAdded     int            `json:"recentlyAdded"`
+// Global in-memory data store
+var store = DataStore{
+	LinuxCategories: []Category{},
+	RecentApps:      make(map[string]time.Time),
 }
-
-type AddApplicationRequest struct {
-	Category  string   `json:"category"`
-	AppName   []string `json:"app_name"`
-	Publisher []string `json:"publisher"`
-}
-
-type AddCategoryRequest struct {
-	Category string `json:"category"`
-}
-
-var (
-	dataFile = "data.json"
-	data     LinuxData
-)
 
 func main() {
-	// Initialize data
-	loadData()
+	// Serve static files (index.html, Chart.js, etc.)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	// Create router
-	r := mux.NewRouter()
-
-	// API routes
-	api := r.PathPrefix("/api").Subrouter()
-	api.HandleFunc("/stats", getStats).Methods("GET")
-	api.HandleFunc("/categories", getCategories).Methods("GET")
-	api.HandleFunc("/applications", getApplications).Methods("GET")
-	api.HandleFunc("/applications", addApplication).Methods("POST")
-	api.HandleFunc("/categories", addCategory).Methods("POST")
-	api.HandleFunc("/download", downloadData).Methods("GET")
-	api.HandleFunc("/download/{category}", downloadByCategory).Methods("GET")
-	api.HandleFunc("/upload", uploadData).Methods("POST")
-	api.HandleFunc("/delete/application", deleteApplication).Methods("DELETE")
-	api.HandleFunc("/delete/category", deleteCategory).Methods("DELETE")
-
-	// Serve static files
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/"))).Methods("GET")
-
-	// Setup CORS
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"*"},
-		AllowCredentials: true,
+	// Serve index.html at root
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/index.html")
 	})
 
-	handler := c.Handler(r)
+	// API endpoints
+	http.HandleFunc("/api/stats", statsHandler)
+	http.HandleFunc("/api/categories", categoriesHandler)
+	http.HandleFunc("/api/applications", applicationsHandler)
+	http.HandleFunc("/api/search", searchHandler)
+	http.HandleFunc("/api/upload", uploadHandler)
+	http.HandleFunc("/api/download/", downloadHandler)
+	http.HandleFunc("/api/update/application", updateApplicationHandler)
+	http.HandleFunc("/api/delete/application", deleteApplicationHandler)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-	port = "8080"
-	}
-
-	fmt.Printf("🚀 Server starting on http://0.0.0.0:%s\n", port)
-	fmt.Printf("🌍 If hosted, access at https://your-railway-subdomain.up.railway.app\n")
-
-	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, handler))
-
-}
-
-func loadData() {
-	file, err := os.Open(dataFile)
-	if err != nil {
-		// Create default data if file doesn't exist
-		data = LinuxData{
-			LinuxCategories: []Category{
-				{
-					Category: "VPN",
-					Applications: []Application{
-						{
-							AppName:   []string{"gimp"},
-							Publisher: []string{"Snapcrafters"},
-						},
-						{
-							AppName:   []string{"wireguard"},
-							Publisher: []string{"Snapcrafters"},
-						},
-					},
-				},
-				{
-					Category: "Security",
-					Applications: []Application{
-						{
-							AppName:   []string{"wireguard"},
-							Publisher: []string{"Snapcrafters"},
-						},
-					},
-				},
-			},
-		}
-		saveData()
-		return
-	}
-	defer file.Close()
-
-	decoder := json.NewDecoder(file)
-	if err := decoder.Decode(&data); err != nil {
-		log.Printf("Error decoding JSON: %v", err)
-		return
+	// Start server
+	log.Println("Server starting on :8080")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Fatalf("Server failed to start: %v", err)
 	}
 }
 
-func saveData() {
-	file, err := os.Create(dataFile)
-	if err != nil {
-		log.Printf("Error creating file: %v", err)
+// statsHandler returns statistics about categories and applications.
+func statsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	defer file.Close()
 
-	encoder := json.NewEncoder(file)
-	encoder.SetIndent("", "    ")
-	if err := encoder.Encode(data); err != nil {
-		log.Printf("Error encoding JSON: %v", err)
-	}
-}
+	store.mu.RLock()
+	defer store.mu.RUnlock()
 
-func getStats(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	totalCategories := len(data.LinuxCategories)
-	totalApplications := 0
 	categoryCounts := make(map[string]int)
-
-	for _, category := range data.LinuxCategories {
-		appCount := len(category.Applications)
-		totalApplications += appCount
-		categoryCounts[category.Category] = appCount
+	for _, category := range store.LinuxCategories {
+		categoryCounts[category.Category] = len(category.Applications)
 	}
 
-	stats := Stats{
-		TotalCategories:   totalCategories,
-		TotalApplications: totalApplications,
+	recentlyAdded := 0
+	for _, t := range store.RecentApps {
+		if time.Since(t) < 24*time.Hour {
+			recentlyAdded++
+		}
+	}
+
+	totalApps := 0
+	for _, category := range store.LinuxCategories {
+		totalApps += len(category.Applications)
+	}
+
+	stats := struct {
+		TotalCategories   int            `json:"totalCategories"`
+		TotalApplications int            `json:"totalApplications"`
+		RecentlyAdded     int            `json:"recentlyAdded"`
+		CategoryCounts    map[string]int `json:"categoryCounts"`
+	}{
+		TotalCategories:   len(store.LinuxCategories),
+		TotalApplications: totalApps,
+		RecentlyAdded:     recentlyAdded,
 		CategoryCounts:    categoryCounts,
-		RecentlyAdded:     0, // Since we don't have timestamps, set to 0
 	}
 
-	json.NewEncoder(w).Encode(stats)
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(stats); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
 }
 
-func getCategories(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// categoriesHandler handles GET (list categories) and POST (add category).
+func categoriesHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		store.mu.RLock()
+		defer store.mu.RUnlock()
 
-	categories := make([]string, 0, len(data.LinuxCategories))
-	for _, category := range data.LinuxCategories {
-		categories = append(categories, category.Category)
-	}
+		categories := make([]string, 0, len(store.LinuxCategories))
+		for _, category := range store.LinuxCategories {
+			categories = append(categories, category.Category)
+		}
 
-	json.NewEncoder(w).Encode(categories)
-}
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(categories); err != nil {
+			http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		}
 
-func getApplications(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	category := r.URL.Query().Get("category")
-	
-	if category == "" {
-		// Return all applications
-		json.NewEncoder(w).Encode(data)
-		return
-	}
-
-	// Return applications for specific category
-	for _, cat := range data.LinuxCategories {
-		if cat.Category == category {
-			json.NewEncoder(w).Encode(cat)
+	case http.MethodPost:
+		var categoryData struct {
+			Category string `json:"category"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&categoryData); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
 			return
 		}
-	}
 
-	// Category not found
-	http.Error(w, "Category not found", http.StatusNotFound)
-}
-
-func addApplication(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	var req AddApplicationRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-		return
-	}
-
-	// Validate required fields
-	if req.Category == "" || len(req.AppName) == 0 || len(req.Publisher) == 0 {
-		http.Error(w, "Category, app_name, and publisher are required", http.StatusBadRequest)
-		return
-	}
-
-	// Find or create category
-	var targetCategory *Category
-	for i := range data.LinuxCategories {
-		if data.LinuxCategories[i].Category == req.Category {
-			targetCategory = &data.LinuxCategories[i]
-			break
-		}
-	}
-
-	if targetCategory == nil {
-		// Create new category
-		newCategory := Category{
-			Category:     req.Category,
-			Applications: []Application{},
-		}
-		data.LinuxCategories = append(data.LinuxCategories, newCategory)
-		targetCategory = &data.LinuxCategories[len(data.LinuxCategories)-1]
-	}
-
-	// Check if application already exists
-	for _, app := range targetCategory.Applications {
-		if equalStringSlices(app.AppName, req.AppName) && equalStringSlices(app.Publisher, req.Publisher) {
-			http.Error(w, "Application already exists in this category", http.StatusConflict)
+		if categoryData.Category == "" {
+			http.Error(w, "Category name is required", http.StatusBadRequest)
 			return
 		}
-	}
 
-	// Add application
-	newApp := Application{
-		AppName:   req.AppName,
-		Publisher: req.Publisher,
-	}
-	targetCategory.Applications = append(targetCategory.Applications, newApp)
+		store.mu.Lock()
+		defer store.mu.Unlock()
 
-	saveData()
-
-	response := map[string]string{"message": "Application added successfully"}
-	json.NewEncoder(w).Encode(response)
-}
-
-func addCategory(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	var req AddCategoryRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
-		return
-	}
-
-	if req.Category == "" {
-		http.Error(w, "Category name is required", http.StatusBadRequest)
-		return
-	}
-
-	// Check if category already exists
-	for _, category := range data.LinuxCategories {
-		if category.Category == req.Category {
-			http.Error(w, "Category already exists", http.StatusConflict)
-			return
-		}
-	}
-
-	// Add new category
-	newCategory := Category{
-		Category:     req.Category,
-		Applications: []Application{},
-	}
-	data.LinuxCategories = append(data.LinuxCategories, newCategory)
-
-	saveData()
-
-	response := map[string]string{"message": "Category added successfully"}
-	json.NewEncoder(w).Encode(response)
-}
-
-func downloadData(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Content-Disposition", "attachment; filename=linux_signatures.json")
-
-	json.NewEncoder(w).Encode(data)
-}
-
-func downloadByCategory(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	categoryName := vars["category"]
-
-	for _, category := range data.LinuxCategories {
-		if category.Category == categoryName {
-			w.Header().Set("Content-Type", "application/json")
-			w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s_signatures.json", strings.ToLower(strings.ReplaceAll(categoryName, " ", "_"))))
-			
-			categoryData := LinuxData{
-				LinuxCategories: []Category{category},
+		for _, cat := range store.LinuxCategories {
+			if strings.EqualFold(cat.Category, categoryData.Category) {
+				http.Error(w, "Category already exists", http.StatusConflict)
+				return
 			}
-			json.NewEncoder(w).Encode(categoryData)
+		}
+
+		store.LinuxCategories = append(store.LinuxCategories, Category{
+			Category:     categoryData.Category,
+			Applications: []Application{},
+		})
+
+		w.WriteHeader(http.StatusOK)
+
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+// applicationsHandler handles GET (list applications) and POST (add application).
+func applicationsHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		store.mu.RLock()
+		defer store.mu.RUnlock()
+
+		category := r.URL.Query().Get("category")
+		if category == "" {
+			w.Header().Set("Content-Type", "application/json")
+			if err := json.NewEncoder(w).Encode(struct {
+				LinuxCategories []Category `json:"linuxCategories"`
+			}{store.LinuxCategories}); err != nil {
+				http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+			}
 			return
+		}
+
+		for _, cat := range store.LinuxCategories {
+			if strings.EqualFold(cat.Category, category) {
+				w.Header().Set("Content-Type", "application/json")
+				if err := json.NewEncoder(w).Encode(cat); err != nil {
+					http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+				}
+				return
+			}
+		}
+
+		http.Error(w, "Category not found", http.StatusNotFound)
+
+	case http.MethodPost:
+		var appData struct {
+			Category  string   `json:"category"`
+			AppName   []string `json:"app_name"`
+			Publisher []string `json:"publisher"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&appData); err != nil {
+			http.Error(w, "Invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		if appData.Category == "" || len(appData.AppName) == 0 || len(appData.Publisher) == 0 {
+			http.Error(w, "Category, app_name, and publisher are required", http.StatusBadRequest)
+			return
+		}
+
+		if len(appData.AppName) != len(appData.Publisher) {
+			http.Error(w, "App names and publishers must have the same length", http.StatusBadRequest)
+			return
+		}
+
+		store.mu.Lock()
+		defer store.mu.Unlock()
+
+		for i, cat := range store.LinuxCategories {
+			if strings.EqualFold(cat.Category, appData.Category) {
+				for _, app := range cat.Applications {
+					for j, name := range app.AppName {
+						for _, newName := range appData.AppName {
+							for _, newPub := range appData.Publisher {
+								if strings.EqualFold(name, newName) && strings.EqualFold(app.Publisher[j], newPub) {
+									http.Error(w, "Application already exists in this category", http.StatusConflict)
+									return
+								}
+							}
+						}
+					}
+				}
+				store.LinuxCategories[i].Applications = append(store.LinuxCategories[i].Applications, Application{
+					AppName:   appData.AppName,
+					Publisher: appData.Publisher,
+				})
+				for i, name := range appData.AppName {
+					store.RecentApps[fmt.Sprintf("%s:%s:%s", appData.Category, name, appData.Publisher[i])] = time.Now()
+				}
+				w.WriteHeader(http.StatusOK)
+				return
+			}
+		}
+
+		http.Error(w, "Category not found", http.StatusNotFound)
+
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+// searchHandler searches applications by name or publisher across all categories.
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	query := strings.TrimSpace(r.URL.Query().Get("q"))
+	if query == "" {
+		http.Error(w, "Query parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	store.mu.RLock()
+	defer store.mu.RUnlock()
+
+	matchingCategories := []Category{}
+	query = strings.ToLower(query)
+
+	for _, category := range store.LinuxCategories {
+		matchingApps := []Application{}
+		for _, app := range category.Applications {
+			matches := false
+			for i, name := range app.AppName {
+				if strings.Contains(strings.ToLower(name), query) || strings.Contains(strings.ToLower(app.Publisher[i]), query) {
+					matches = true
+					break
+				}
+			}
+			if matches {
+				matchingApps = append(matchingApps, app)
+			}
+		}
+		if len(matchingApps) > 0 {
+			matchingCategories = append(matchingCategories, Category{
+				Category:     category.Category,
+				Applications: matchingApps,
+			})
 		}
 	}
 
-	http.Error(w, "Category not found", http.StatusNotFound)
+	if len(matchingCategories) == 0 {
+		http.Error(w, "No applications found", http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(struct {
+		LinuxCategories []Category `json:"linuxCategories"`
+	}{matchingCategories}); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
 }
 
-func uploadData(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// uploadHandler handles JSON file uploads for bulk import.
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
 
-	// Parse multipart form
-	err := r.ParseMultipartForm(10 << 20) // 10MB max
-	if err != nil {
-		http.Error(w, "Unable to parse form", http.StatusBadRequest)
+	if err := r.ParseMultipartForm(10 << 20); err != nil { // 10 MB limit
+		http.Error(w, "File too large", http.StatusBadRequest)
 		return
 	}
 
 	file, _, err := r.FormFile("jsonFile")
 	if err != nil {
-		http.Error(w, "Unable to get file", http.StatusBadRequest)
+		http.Error(w, "Invalid file", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
-	// Read file content
-	fileBytes, err := io.ReadAll(file)
+	data, err := io.ReadAll(file)
 	if err != nil {
-		http.Error(w, "Unable to read file", http.StatusInternalServerError)
+		http.Error(w, "Failed to read file", http.StatusInternalServerError)
 		return
 	}
 
-	// Parse JSON
-	var uploadedData LinuxData
-	if err := json.Unmarshal(fileBytes, &uploadedData); err != nil {
+	var uploadData struct {
+		LinuxCategories []Category `json:"linuxCategories"`
+	}
+	if err := json.Unmarshal(data, &uploadData); err != nil {
 		http.Error(w, "Invalid JSON format", http.StatusBadRequest)
 		return
 	}
 
-	// Merge data
-	addedApps := 0
-	addedCategories := 0
+	store.mu.Lock()
+	defer store.mu.Unlock()
 
-	for _, uploadedCategory := range uploadedData.LinuxCategories {
-		// Find existing category or create new one
-		var existingCategory *Category
-		for i := range data.LinuxCategories {
-			if data.LinuxCategories[i].Category == uploadedCategory.Category {
-				existingCategory = &data.LinuxCategories[i]
+	addedCategories := 0
+	addedApplications := 0
+
+	for _, newCat := range uploadData.LinuxCategories {
+		if newCat.Category == "" {
+			continue
+		}
+
+		var existingCat *Category
+		for i, cat := range store.LinuxCategories {
+			if strings.EqualFold(cat.Category, newCat.Category) {
+				existingCat = &store.LinuxCategories[i]
 				break
 			}
 		}
 
-		if existingCategory == nil {
-			// Create new category
-			data.LinuxCategories = append(data.LinuxCategories, Category{
-				Category:     uploadedCategory.Category,
+		if existingCat == nil {
+			store.LinuxCategories = append(store.LinuxCategories, Category{
+				Category:     newCat.Category,
 				Applications: []Application{},
 			})
-			existingCategory = &data.LinuxCategories[len(data.LinuxCategories)-1]
+			existingCat = &store.LinuxCategories[len(store.LinuxCategories)-1]
 			addedCategories++
 		}
 
-		// Add applications
-		for _, uploadedApp := range uploadedCategory.Applications {
-			// Check if application already exists
+		for _, app := range newCat.Applications {
+			if len(app.AppName) == 0 || len(app.Publisher) == 0 || len(app.AppName) != len(app.Publisher) {
+				continue
+			}
+
 			exists := false
-			for _, existingApp := range existingCategory.Applications {
-				if equalStringSlices(existingApp.AppName, uploadedApp.AppName) &&
-					equalStringSlices(existingApp.Publisher, uploadedApp.Publisher) {
-					exists = true
-					break
+			for _, existingApp := range existingCat.Applications {
+				for j, name := range existingApp.AppName {
+					for _, newName := range app.AppName {
+						for _, newPub := range app.Publisher {
+							if strings.EqualFold(name, newName) && strings.EqualFold(existingApp.Publisher[j], newPub) {
+								exists = true
+								break
+							}
+						}
+						if exists {
+							break
+						}
+					}
+					if exists {
+						break
+					}
 				}
 			}
 
 			if !exists {
-				existingCategory.Applications = append(existingCategory.Applications, uploadedApp)
-				addedApps++
+				existingCat.Applications = append(existingCat.Applications, app)
+				addedApplications += len(app.AppName)
+				for i, name := range app.AppName {
+					store.RecentApps[fmt.Sprintf("%s:%s:%s", newCat.Category, name, app.Publisher[i])] = time.Now()
+				}
 			}
 		}
 	}
 
-	saveData()
-
-	response := map[string]interface{}{
-		"message":          "Data uploaded successfully",
-		"addedCategories":  addedCategories,
-		"addedApplications": addedApps,
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(struct {
+		AddedCategories   int `json:"addedCategories"`
+		AddedApplications int `json:"addedApplications"`
+	}{addedCategories, addedApplications}); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
-	json.NewEncoder(w).Encode(response)
 }
 
-func deleteApplication(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	category := r.URL.Query().Get("category")
-	appName := r.URL.Query().Get("app_name")
-	
-	if category == "" || appName == "" {
-		http.Error(w, "Category and app_name parameters are required", http.StatusBadRequest)
+// downloadHandler handles JSON downloads for all data or by category.
+func downloadHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Find category and application
-	for i, cat := range data.LinuxCategories {
-		if cat.Category == category {
+	store.mu.RLock()
+	defer store.mu.RUnlock()
+
+	parts := strings.Split(strings.TrimPrefix(r.URL.Path, "/api/download/"), "/")
+	if len(parts) == 1 && parts[0] == "" {
+		// Download all data
+		w.Header().Set("Content-Disposition", "attachment; filename=linux_signatures.json")
+		w.Header().Set("Content-Type", "application/json")
+		if err := json.NewEncoder(w).Encode(struct {
+			LinuxCategories []Category `json:"linuxCategories"`
+		}{store.LinuxCategories}); err != nil {
+			http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	// Download by category
+	category := parts[0]
+	for _, cat := range store.LinuxCategories {
+		if strings.EqualFold(cat.Category, category) {
+			w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s_signatures.json", strings.ToLower(strings.ReplaceAll(category, " ", "_"))))
+			w.Header().Set("Content-Type", "application/json")
+			if err := json.NewEncoder(w).Encode(cat); err != nil {
+				http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+			}
+			return
+		}
+	}
+
+	http.Error(w, "Category not found", http.StatusNotFound)
+}
+
+// updateApplicationHandler updates an existing application.
+func updateApplicationHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var updateData struct {
+		Category     string   `json:"category"`
+		OldAppName   string   `json:"old_app_name"`
+		OldPublisher string   `json:"old_publisher"`
+		NewAppName   []string `json:"new_app_name"`
+		NewPublisher []string `json:"new_publisher"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&updateData); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+
+	if updateData.Category == "" || updateData.OldAppName == "" || updateData.OldPublisher == "" ||
+		len(updateData.NewAppName) == 0 || len(updateData.NewPublisher) == 0 ||
+		len(updateData.NewAppName) != len(updateData.NewPublisher) {
+		http.Error(w, "All fields are required and new app names and publishers must match in length", http.StatusBadRequest)
+		return
+	}
+
+	store.mu.Lock()
+	defer store.mu.Unlock()
+
+	for i, cat := range store.LinuxCategories {
+		if strings.EqualFold(cat.Category, updateData.Category) {
 			for j, app := range cat.Applications {
-				if len(app.AppName) > 0 && app.AppName[0] == appName {
-					// Remove application
-					data.LinuxCategories[i].Applications = append(
-						data.LinuxCategories[i].Applications[:j],
-						data.LinuxCategories[i].Applications[j+1:]...,
-					)
-					saveData()
-					
-					response := map[string]string{"message": "Application deleted successfully"}
-					json.NewEncoder(w).Encode(response)
-					return
+				for k, name := range app.AppName {
+					if strings.EqualFold(name, updateData.OldAppName) && strings.EqualFold(app.Publisher[k], updateData.OldPublisher) {
+						store.LinuxCategories[i].Applications[j].AppName = updateData.NewAppName
+						store.LinuxCategories[i].Applications[j].Publisher = updateData.NewPublisher
+						delete(store.RecentApps, fmt.Sprintf("%s:%s:%s", updateData.Category, updateData.OldAppName, updateData.OldPublisher))
+						for i, name := range updateData.NewAppName {
+							store.RecentApps[fmt.Sprintf("%s:%s:%s", updateData.Category, name, updateData.NewPublisher[i])] = time.Now()
+						}
+						w.WriteHeader(http.StatusOK)
+						return
+					}
 				}
 			}
 			http.Error(w, "Application not found", http.StatusNotFound)
@@ -449,40 +498,47 @@ func deleteApplication(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Category not found", http.StatusNotFound)
 }
 
-func deleteCategory(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	category := r.URL.Query().Get("category")
-	
-	if category == "" {
-		http.Error(w, "Category parameter is required", http.StatusBadRequest)
+// deleteApplicationHandler deletes an application from a category.
+func deleteApplicationHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Find and remove category
-	for i, cat := range data.LinuxCategories {
-		if cat.Category == category {
-			data.LinuxCategories = append(data.LinuxCategories[:i], data.LinuxCategories[i+1:]...)
-			saveData()
-			
-			response := map[string]string{"message": "Category deleted successfully"}
-			json.NewEncoder(w).Encode(response)
+	category := r.URL.Query().Get("category")
+	appName := r.URL.Query().Get("app_name")
+	publisher := r.URL.Query().Get("publisher")
+
+	if category == "" || appName == "" || publisher == "" {
+		http.Error(w, "Category, app_name, and publisher are required", http.StatusBadRequest)
+		return
+	}
+
+	store.mu.Lock()
+	defer store.mu.Unlock()
+
+	for i, cat := range store.LinuxCategories {
+		if strings.EqualFold(cat.Category, category) {
+			for j, app := range cat.Applications {
+				for k, name := range app.AppName {
+					if strings.EqualFold(name, appName) && strings.EqualFold(app.Publisher[k], publisher) {
+						// Remove the specific app name and publisher
+						store.LinuxCategories[i].Applications[j].AppName = append(app.AppName[:k], app.AppName[k+1:]...)
+						store.LinuxCategories[i].Applications[j].Publisher = append(app.Publisher[:k], app.Publisher[k+1:]...)
+						delete(store.RecentApps, fmt.Sprintf("%s:%s:%s", category, appName, publisher))
+						// If no names left, remove the application
+						if len(store.LinuxCategories[i].Applications[j].AppName) == 0 {
+							store.LinuxCategories[i].Applications = append(store.LinuxCategories[i].Applications[:j], store.LinuxCategories[i].Applications[j+1:]...)
+						}
+						w.WriteHeader(http.StatusOK)
+						return
+					}
+				}
+			}
+			http.Error(w, "Application not found", http.StatusNotFound)
 			return
 		}
 	}
 
 	http.Error(w, "Category not found", http.StatusNotFound)
-}
-
-// Helper function to compare string slices
-func equalStringSlices(a, b []string) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for i := range a {
-		if a[i] != b[i] {
-			return false
-		}
-	}
-	return true
 }
