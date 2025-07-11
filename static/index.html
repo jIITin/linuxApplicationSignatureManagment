@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linux Application Signature Management</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-=======
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
     <style>
         * {
             margin: 0;
@@ -18,7 +14,6 @@
         }
 
         body {
-<<<<<<< HEAD
             font-family: 'Roboto', Arial, sans-serif;
             background: #FFFFFF;
             min-height: 100vh;
@@ -54,105 +49,10 @@
             font-size: 1.125rem;
             color: #555555;
             font-weight: 400;
-=======
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            min-height: 100vh;
-            line-height: 1.6;
-            cursor: auto;
-            overflow-x: hidden;
-        }
-
-        body.light-mode {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
-            color: #1d1d1f;
-        }
-
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(12px);
-            border-radius: 1rem;
-            padding: 4rem 2rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .header {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-        }
-
-        .light-mode .header h1 {
-            color: #0071e3;
-        }
-
-        .header p {
-            font-size: 1.4rem;
-            color: #a0a0a0;
-        }
-
-        .light-mode .header p {
-            color: #6e6e73;
-        }
-
-        .theme-toggle {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            width: 3rem;
-            height: 1.8rem;
-            background: #1c2526;
-            border-radius: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0.2rem;
-            border: 1px solid #00ffff;
-        }
-
-        .light-mode .theme-toggle {
-            background: #d2d2d7;
-            border-color: #0071e3;
-        }
-
-        .theme-toggle .knob {
-            width: 1.6rem;
-            height: 1.6rem;
-            background: #00ffff;
-            border-radius: 50%;
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .light-mode .theme-toggle .knob {
-            background: #ffffff;
-        }
-
-        .theme-toggle.active .knob {
-            transform: translateX(1.2rem);
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stats-grid {
             display: grid;
-<<<<<<< HEAD
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
@@ -174,33 +74,11 @@
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0, 91, 172, 0.2);
             border-color: #005BAC;
-=======
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(8px);
-            border-radius: 1rem;
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stat-card::before {
             content: '';
             position: absolute;
-<<<<<<< HEAD
             top: 0;
             left: 0;
             width: 100%;
@@ -208,19 +86,6 @@
             background: linear-gradient(90deg, #005BAC, #0077B6);
             opacity: 0;
             transition: opacity 0.3s ease;
-=======
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .light-mode .stat-card::before {
-            background: radial-gradient(circle, rgba(0, 113, 227, 0.3) 0%, transparent 70%);
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .stat-card:hover::before {
@@ -228,7 +93,6 @@
         }
 
         .stat-number {
-<<<<<<< HEAD
             font-size: 2.5rem;
             font-weight: 700;
             color: #005BAC;
@@ -294,154 +158,6 @@
             background: #004080;
             transform: scale(1.05);
             box-shadow: 0 4px 12px rgba(0, 91, 172, 0.3);
-=======
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: #00ffff;
-        }
-
-        .light-mode .stat-number {
-            color: #0071e3;
-        }
-
-        .stat-label {
-            color: #a0a0a0;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-        }
-
-        .light-mode .stat-label {
-            color: #6e6e73;
-        }
-
-        .main-content {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 2rem;
-        }
-
-        .content-panel {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(8px);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .content-panel {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .sidebar {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(8px);
-            border-radius: 1rem;
-            padding: 2rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #00ffff;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-transform: uppercase;
-        }
-
-        .light-mode .section-title {
-            color: #0071e3;
-        }
-
-        .search-bar {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            background: rgba(40, 40, 40, 0.9);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            color: #e0e0e0;
-            transition: all 0.3s ease;
-        }
-
-        .light-mode .search-bar input {
-            background: rgba(245, 245, 247, 0.9);
-            border-color: rgba(0, 113, 227, 0.3);
-            color: #1d1d1f;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-            border-color: #00ffff;
-            box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .search-bar input:focus {
-            border-color: #0071e3;
-            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
-        }
-
-        .search-bar::before {
-            content: '🔍';
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #a0a0a0;
-        }
-
-        .light-mode .search-bar::before {
-            color: #6e6e73;
-        }
-
-        .category-filter select {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(40, 40, 40, 0.9);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            color: #e0e0e0;
-        }
-
-        .light-mode .category-filter select {
-            background: rgba(245, 245, 247, 0.9);
-            border-color: rgba(0, 113, 227, 0.3);
-            color: #1d1d1f;
-        }
-
-        .btn {
-            background: transparent;
-            color: #00ffff;
-            border: 2px solid #00ffff;
-            padding: 0.9rem 1.5rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .light-mode .btn {
-            color: #0071e3;
-            border-color: #0071e3;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .btn::before {
@@ -451,24 +167,14 @@
             left: -100%;
             width: 100%;
             height: 100%;
-<<<<<<< HEAD
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.4s ease;
-=======
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-        }
-
-        .light-mode .btn::before {
-            background: linear-gradient(90deg, transparent, rgba(0, 113, 227, 0.3), transparent);
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .btn:hover::before {
             left: 100%;
         }
 
-<<<<<<< HEAD
         .btn-danger {
             background: #D32F2F;
         }
@@ -480,66 +186,14 @@
 
         .form-group {
             margin-bottom: 20px;
-=======
-        .btn:hover {
-            background: rgba(0, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        }
-
-        .light-mode .btn:hover {
-            background: rgba(0, 113, 227, 0.2);
-            box-shadow: 0 0 20px rgba(0, 113, 227, 0.5);
-        }
-
-        .btn-danger {
-            border-color: #ff2d55;
-            color: #ff2d55;
-        }
-
-        .light-mode .btn-danger {
-            border-color: #ff2d55;
-            color: #ff2d55;
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 45, 85, 0.2);
-            box-shadow: 0 0 20px rgba(255, 45, 85, 0.5);
-        }
-
-        .btn-edit {
-            border-color: #ff9500;
-            color: #ff9500;
-        }
-
-        .light-mode .btn-edit {
-            border-color: #ff9500;
-            color: #ff9500;
-        }
-
-        .btn-edit:hover {
-            background: rgba(255, 149, 0, 0.2);
-            box-shadow: 0 0 20px rgba(255, 149, 0, 0.5);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .form-group label {
             display: block;
-<<<<<<< HEAD
             margin-bottom: 6px;
             font-weight: 500;
             color: #333333;
             font-size: 1rem;
-=======
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #e0e0e0;
-            text-transform: uppercase;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .light-mode .form-group label {
@@ -549,7 +203,6 @@
         .form-group input,
         .form-group select {
             width: 100%;
-<<<<<<< HEAD
             padding: 12px 16px;
             background: #F5F5F5;
             border: 1px solid #E0E0E0;
@@ -572,26 +225,10 @@
 
         .category-filter {
             margin-bottom: Helvetica
-=======
-            padding: 1rem;
-            background: rgba(40, 40, 40, 0.9);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            color: #e0e0e0;
-        }
-
-        .light-mode .form-group input,
-        .light-mode .form-group select {
-            background: rgba(245, 245, 247, 0.9);
-            border-color: rgba(0, 113, 227, 0.3);
-            color: #1d1d1f;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .applications-grid {
             display: grid;
-<<<<<<< HEAD
             gap: 16px;
         }
 
@@ -628,41 +265,10 @@
             opacity: 1;
         }
 
-=======
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 2rem;
-        }
-
-        .app-card {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(8px);
-            border-radius: 1rem;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .app-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .app-card:hover {
-            transform: translateY(-6px) rotate(0.5deg);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .light-mode .app-card:hover {
-            box-shadow: 0 0 30px rgba(0, 113, 227, 0.3);
-        }
-
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         .app-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-<<<<<<< HEAD
             margin-bottom: 10px;
         }
 
@@ -698,52 +304,6 @@
             padding: 8px 14px;
             font-size: 0.875rem;
             border-radius: 8px;
-=======
-            margin-bottom: 1rem;
-        }
-
-        .app-name {
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: #e0e0e0;
-            text-transform: uppercase;
-        }
-
-        .light-mode .app-name {
-            color: #1d1d1f;
-        }
-
-        .app-category {
-            background: transparent;
-            color: #00ffff;
-            border: 1px solid #00ffff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .light-mode .app-category {
-            color: #0071e3;
-            border-color: #0071e3;
-        }
-
-        .app-publisher {
-            color: #a0a0a0;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .light-mode .app-publisher {
-            color: #6e6e73;
-        }
-
-        .app-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .modal {
@@ -754,7 +314,6 @@
             top: 0;
             width: 100%;
             height: 100%;
-<<<<<<< HEAD
             background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease;
         }
@@ -817,88 +376,10 @@
 
         .file-upload input[type="file"] {
             display: none;
-=======
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        .modal-content {
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(12px);
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 600px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .modal-content h2 {
-            color: #00ffff;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .light-mode .modal-content h2 {
-            color: #0071e3;
-        }
-
-        .close {
-            color: #a0a0a0;
-            float: right;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .light-mode .close {
-            color: #6e6e73;
-        }
-
-        .close:hover {
-            color: #00ffff;
-            transform: rotate(90deg);
-        }
-
-        .light-mode .close:hover {
-            color: #0071e3;
-        }
-
-        .chart-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(40, 40, 40, 0.9);
-            border-radius: 0.75rem;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-        }
-
-        .light-mode .chart-container {
-            background: rgba(245, 245, 247, 0.9);
-            border-color: rgba(0, 113, 227, 0.2);
-        }
-
-        .file-upload {
-            border: 2px dashed #00ffff;
-            border-radius: 0.75rem;
-            padding: 2rem;
-            text-align: center;
-            margin: 1.5rem 0;
-        }
-
-        .light-mode .file-upload {
-            border-color: #0071e3;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         .file-upload label {
             cursor: pointer;
-<<<<<<< HEAD
             color: #005BAC;
             font-weight: 500;
             font-size: 1rem;
@@ -934,64 +415,9 @@
             background: #FFEBEE;
             color: #D32F2F;
             border: 1px solid #D32F2F;
-=======
-            color: #00ffff;
-            font-weight: 600;
-            font-size: 1rem;
-            text-transform: uppercase;
-        }
-
-        .light-mode .file-upload label {
-            color: #0071e3;
-        }
-
-        .file-upload p {
-            color: #a0a0a0;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .light-mode .file-upload p {
-            color: #6e6e73;
-        }
-
-        .success-message,
-        .error-message {
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            margin: 1rem 0;
-            display: none;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .success-message {
-            background: rgba(0, 255, 255, 0.2);
-            color: #00ffff;
-            border: 1px solid #00ffff;
-        }
-
-        .light-mode .success-message {
-            background: rgba(0, 113, 227, 0.2);
-            color: #0071e3;
-            border-color: #0071e3;
-        }
-
-        .error-message {
-            background: rgba(255, 45, 85, 0.2);
-            color: #ff2d55;
-            border: 1px solid #ff2d55;
-        }
-
-        .light-mode .error-message {
-            background: rgba(255, 45, 85, 0.2);
-            color: #ff2d55;
-            border-color: #ff2d55;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         ::-webkit-scrollbar {
-<<<<<<< HEAD
             width: 6px;
         }
 
@@ -1037,33 +463,12 @@
         @keyframes scaleIn {
             from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
-=======
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1c2526;
-        }
-
-        .light-mode ::-webkit-scrollbar-track {
-            background: #f5f5f7;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #00ffff;
-            border-radius: 6px;
-        }
-
-        .light-mode ::-webkit-scrollbar-thumb {
-            background: #0071e3;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         }
 
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
             }
-<<<<<<< HEAD
             
             .stats-grid {
                 grid-template-columns: 1fr;
@@ -1071,18 +476,12 @@
 
             .header h1 {
                 font-size: 1.75rem;
-=======
-
-            .stats-grid {
-                grid-template-columns: 1fr;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             }
 
             .container {
                 padding: 1rem;
             }
 
-<<<<<<< HEAD
             .header, .content-panel, .sidebar {
                 padding: 16px;
             }
@@ -1095,10 +494,6 @@
 
             .app-category {
                 align-self: flex-start;
-=======
-            .header h1 {
-                font-size: 2.5rem;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             }
         }
     </style>
@@ -1156,20 +551,6 @@
                 </div>
                 <div id="applicationsContainer" class="applications-grid"></div>
             </div>
-<<<<<<< HEAD
-=======
-
-            <div class="sidebar">
-                <div class="section-title">⚡ Control Center</div>
-                <button class="btn" onclick="openModal('addAppModal')">➕ Add Application</button>
-                <button class="btn" onclick="openModal('addCategoryModal')">📁 New Category</button>
-                <button class="btn" onclick="openModal('uploadModal')">📤 Import Data</button>
-                <button class="btn" onclick="downloadData()">📥 Export Matrix</button>
-                <div class="chart-container">
-                    <canvas id="categoryChart" width="300" height="200"></canvas>
-                </div>
-            </div>
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         </div>
     </div>
 
@@ -1177,11 +558,7 @@
     <div id="addAppModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('addAppModal')">×</span>
-<<<<<<< HEAD
             <h2>Secure New Application</h2>
-=======
-            <h2>Add New Application</h2>
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             <div class="success-message" id="addAppSuccess"></div>
             <div class="error-message" id="addAppError"></div>
             <form id="addAppForm">
@@ -1225,11 +602,7 @@
     <div id="uploadModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('uploadModal')">×</span>
-<<<<<<< HEAD
             <h2>Bulk Security Import</h2>
-=======
-            <h2>Bulk Data Import</h2>
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             <div class="success-message" id="uploadSuccess"></div>
             <div class="error-message" id="uploadError"></div>
             <div class="file-upload">
@@ -1430,12 +803,7 @@
             });
         }
 
-<<<<<<< HEAD
         // Update chart with Samsung-inspired theme
-=======
-        // Update chart
-        let categoryChart = null;
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
         function updateChart(categoryCounts) {
             const ctx = document.getElementById('categoryChart').getContext('2d');
             if (categoryChart) categoryChart.destroy();
@@ -1446,7 +814,6 @@
                 data: {
                     labels: Object.keys(categoryCounts),
                     datasets: [{
-<<<<<<< HEAD
                         data: data,
                         backgroundColor: [
                             '#005BAC',
@@ -1460,15 +827,6 @@
                         ],
                         borderWidth: 1,
                         borderColor: '#FFFFFF'
-=======
-                        data: Object.values(categoryCounts),
-                        backgroundColor: isLightMode ? [
-                            '#0071e3', '#2e7d32', '#ff9500', '#ff2d55', '#5856d6'
-                        ] : [
-                            '#00ffff', '#ff2d55', '#ff9500', '#2e7d32', '#5856d6'
-                        ],
-                        borderWidth: 0
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                     }]
                 },
                 options: {
@@ -1478,7 +836,6 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-<<<<<<< HEAD
                                 padding: 15,
                                 usePointStyle: true,
                                 color: '#333333',
@@ -1486,21 +843,12 @@
                                     size: 12,
                                     family: 'Roboto, sans-serif'
                                 }
-=======
-                                color: isLightMode ? '#1d1d1f' : '#e0e0e0',
-                                font: { size: 12, weight: '600' }
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                             }
                         }
                     },
                     animation: {
-<<<<<<< HEAD
                         duration: 1200,
                         easing: 'easeOutQuart'
-=======
-                        duration: 2000,
-                        easing: 'easeOutElastic'
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
                     }
                 }
             });
@@ -1646,10 +994,7 @@
         }
 
         function closeModal(modalId) {
-<<<<<<< HEAD
             document.getElementById(modalId).style.display = 'none';
-=======
->>>>>>> d038376d9d9226cb4bb70a40d71d90ca927212fc
             const modal = document.getElementById(modalId);
             gsap.to(modal.querySelector('.modal-content'), {
                 scale: 0.7,
